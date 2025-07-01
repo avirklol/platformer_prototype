@@ -18,6 +18,10 @@ func _on_animation_finished() -> void:
 func _on_ledge_release_timeout() -> void:
 	disable_ledge_grab(false)
 
+func _on_ladder_release_timeout() -> void:
+	disable_main_collision(false)
+	disable_ladder_shapes(false)
+
 
 func enter() -> void:
 	animations.play(animation_name)
@@ -72,55 +76,18 @@ func flip_collision_shapes(flip: bool) -> void:
 	%WallSlideCollision.position = wall_slide_pos
 
 	# Flip ShapeCasts
-	var ledge_check_pos = %HeadCheck.target_position
+	var down_climb_pos = %DownClimbCheck.target_position
+	var down_climb_shape_pos = %DownClimbCheck.position
+	var head_check_pos = %HeadCheck.target_position
 	var run_check_pos = %RunCheck.target_position
-	ledge_check_pos.x = -abs(ledge_check_pos.x) if flip else abs(ledge_check_pos.x)
+	head_check_pos.x = -abs(head_check_pos.x) if flip else abs(head_check_pos.x)
 	run_check_pos.x = -abs(run_check_pos.x) if flip else abs(run_check_pos.x)
-	%HeadCheck.target_position = ledge_check_pos
+	down_climb_pos.x = abs(down_climb_pos.x) if flip else -abs(down_climb_pos.x)
+	down_climb_shape_pos.x = abs(down_climb_shape_pos.x) if flip else -abs(down_climb_shape_pos.x)
+	%DownClimbCheck.target_position = down_climb_pos
+	%DownClimbCheck.position = down_climb_shape_pos
+	%HeadCheck.target_position = head_check_pos
 	%RunCheck.target_position = run_check_pos
-
-
-func enable_crouch_collision(enable: bool) -> void:
-	if enable:
-		# Disabled
-		%MainCollision.disabled = true
-		%LedgeGrab.disabled = true
-		%HeadCheck.enabled = false
-		%WallBodyCheck.enabled = false
-		%WallSlideCollision.disabled = true
-		%WallSlideCheck.enabled = false
-		# Enabled
-		%CrouchWallBodyCheck.enabled = true
-		%CrouchCollision.disabled = false
-		# Resize
-		%TopCheck.shape.size.x = 17
-	else:
-		# Enabled
-		%MainCollision.disabled = false
-		%LedgeGrab.disabled = false
-		%HeadCheck.enabled = true
-		%WallBodyCheck.enabled = true
-		%WallSlideCheck.enabled = true
-		%WallSlideCollision.disabled = true
-		# Disabled
-		%CrouchWallBodyCheck.enabled = false
-		%CrouchCollision.disabled = true
-		# Resize
-		%TopCheck.shape.size.x = 20
-
-
-func enable_wall_slide_collision(enable: bool) -> void:
-	if enable:
-		%MainCollision.disabled = true
-		%LedgeGrab.disabled = true
-		%HeadCheck.enabled = false
-		%WallSlideCollision.disabled = false
-
-	else:
-		%MainCollision.disabled = false
-		%LedgeGrab.disabled = false
-		%HeadCheck.enabled = true
-		%WallSlideCollision.disabled = true
 
 
 func disable_ledge_grab(disable: bool, time: float = 0.5) -> void:
@@ -136,10 +103,36 @@ func disable_ledge_grab(disable: bool, time: float = 0.5) -> void:
 		%FloorCheck.enabled = true
 		%TopCheck.enabled = true
 
+func disable_ladder_shapes(disable: bool, time: float = 0.5) -> void:
+	if disable:
+		%LadderRelease.start(time)
+		%LadderTopCheck.enabled = false
+		%LadderBottomCheck.enabled = false
+	else:
+		%LadderTopCheck.enabled = true
+		%LadderBottomCheck.enabled = true
+
+func disable_main_collision(disable: bool, time: float = 0.2) -> void:
+	if disable:
+		%LadderRelease.start(time)
+		%MainCollision.disabled = true
+		%LedgeGrab.disabled = true
+		%HeadCheck.enabled = false
+		%WallBodyCheck.enabled = false
+		%WallSlideCheck.enabled = false
+		parent.is_on_ladder = false
+	else:
+		%MainCollision.disabled = false
+		%LedgeGrab.disabled = false
+		%HeadCheck.enabled = true
+		%WallBodyCheck.enabled = true
+		%WallSlideCheck.enabled = true
+
 
 func pushing_wall(shapecast, x_direction) -> bool:
 	if shapecast.is_colliding():
 		if (shapecast.get_collision_normal(0)[0] < 0 and x_direction > 0) or (shapecast.get_collision_normal(0)[0] > 0 and x_direction < 0):
-			print("Player against wall")
+			print("Player pushing wall")
 			return true
+	# print("Player not pushing wall")
 	return false
