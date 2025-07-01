@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=3 uid="uid://cgxdgtlko0jl7"]
+
+[ext_resource type="Script" uid="uid://b8xy7rxd5kkpy" path="res://scripts/ladder.gd" id="1_37j86"]
+[ext_resource type="Texture2D" uid="uid://dx85fv3qmaotm" path="res://assets/sprites/things/Ladder/LadderFront.png" id="2_unkm2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a7gys"]
+size = Vector2(8, 184.74)
+
+[node name="LargeLadder" type="Area2D"]
+collision_mask = 3
+script = ExtResource("1_37j86")
+metadata/_edit_horizontal_guides_ = [-161.0]
+
+[node name="Section0" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_unkm2")
+
+[node name="Section1" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -44)
+texture = ExtResource("2_unkm2")
+
+[node name="Section2" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -89)
+texture = ExtResource("2_unkm2")
+
+[node name="Section3" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -129)
+texture = ExtResource("2_unkm2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -68.63)
+shape = SubResource("RectangleShape2D_a7gys")
