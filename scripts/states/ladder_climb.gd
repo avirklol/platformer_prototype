@@ -12,6 +12,7 @@ func enter() -> void:
 	enable_ladder_collision(true)
 	center_player()
 
+
 func exit() -> void:
 	if %StateMachine.next_state != ladder_top_state:
 		if in_collision:
@@ -20,6 +21,7 @@ func exit() -> void:
 			in_collision = false
 		else:
 			enable_ladder_collision(false)
+
 
 func process_frame(delta: float) -> State:
 	if direction().y < 0:

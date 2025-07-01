@@ -2,6 +2,7 @@ extends Area2D
 
 signal ladder_entered(ladder: Area2D)
 
+
 func _ready() -> void:
     add_to_group("ladders")
     body_entered.connect(_on_body_entered)
