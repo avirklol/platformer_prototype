@@ -7,14 +7,17 @@ extends State
 @export var ledge_grab_state: State
 @export var landing_state: State
 @export var wall_slide_state: State
+@export var ladder_climb_state: State
 
 var high_fall: bool = false
-var initial_velocity: Vector2 = Vector2.ZERO
+# var initial_velocity: Vector2 = Vector2.ZERO #TODO: Implement velocity carryover from grounded movement.
+
 
 func enter() -> void:
 	super()
 	high_fall = false
-	initial_velocity = parent.velocity
+	# initial_velocity = parent.velocity #TODO: Implement velocity carryover from grounded movement.
+
 
 func process_physics(delta: float) -> State:
 	var movement = direction().x * move_speed
@@ -29,13 +32,13 @@ func process_physics(delta: float) -> State:
 		flip_animations(movement < 0)
 		flip_collision_shapes(movement < 0)
 
-	print(parent.velocity.y)
-	print(high_fall)
 	parent.move_and_slide()
 
+	if parent.is_on_ladder and %LadderBottomCheck.is_colliding() and direction().y < 0:
+		return ladder_climb_state
 
 	if parent.is_on_floor():
-		if %WallBodyCheck.is_colliding()and !%FloorCheck.is_colliding() and !%TopCheck.is_colliding():
+		if %WallBodyCheck.is_colliding() and !%FloorCheck.is_colliding() and !%TopCheck.is_colliding():
 				return ledge_grab_state
 		else:
 			if high_fall:
@@ -48,6 +51,6 @@ func process_physics(delta: float) -> State:
 				return walking_state
 			return standing_state
 	else:
-		if %WallBodyCheck.is_colliding() and %WallSlideCheck.is_colliding() and player_blocked_by_wall(%WallBodyCheck, direction().x) and !%FloorCheck.is_colliding():
+		if %WallSlideCheck.is_colliding() and pushing_wall(%WallBodyCheck, direction().x) and !%FloorCheck.is_colliding():
 			return wall_slide_state
 		return null

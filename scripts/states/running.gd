@@ -6,13 +6,13 @@ extends State
 @export var falling_state: State
 @export var crouching_state: State
 @export var stop_running_state: State
+# @export var sliding_state: State
 
 var run_direction_history: float = 0.0
 
 
 func enter() -> void:
 	super()
-	enable_wall_slide_collision(false)
 	enable_running_collision(true)
 
 
@@ -26,19 +26,13 @@ func process_input(event: InputEvent) -> State:
 	if direction().x == 0:
 		return stop_running_state
 	else:
-		if pushing_wall(%HeadCheck, direction().x) or pushing_wall(%RunCheck, direction().x):
+		if !running():
 			return stop_running_state
-
-	if !running():
-		return stop_running_state
-
-	if crouch_toggle():
-		return stop_running_state
-
-	if jumping():
-		return jumping_state
-
-	return null
+		if crouch_toggle():
+			return stop_running_state
+		if jumping():
+			return jumping_state
+		return null
 
 
 func process_physics(delta: float) -> State:
@@ -57,8 +51,10 @@ func process_physics(delta: float) -> State:
 	flip_animations(movement < 0)
 	flip_collision_shapes(movement < 0)
 
-
 	parent.move_and_slide()
+
+	if pushing_wall(%HeadCheck, direction().x) or pushing_wall(%RunCheck, direction().x):
+		return stop_running_state
 
 	if !parent.is_on_floor():
 		return falling_state
@@ -68,8 +64,8 @@ func process_physics(delta: float) -> State:
 
 func enable_running_collision(enable: bool) -> void:
 	if enable:
-		%RunCheck.enabled = true
+		%RunCheck.target_position.x = 48
 		%HeadCheck.target_position.x = 48
 	else:
-		%RunCheck.enabled = false
+		%RunCheck.target_position.x = 11
 		%HeadCheck.target_position.x = 11

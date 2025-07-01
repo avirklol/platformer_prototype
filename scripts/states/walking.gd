@@ -6,11 +6,11 @@ extends State
 @export var crouch_walking_state: State
 @export var jumping_state: State
 @export var falling_state: State
+@export var ladder_climb_state: State
 
 
 func enter() -> void:
 	super()
-	enable_wall_slide_collision(false)
 
 
 func process_input(event: InputEvent) -> State:
@@ -41,6 +41,9 @@ func process_physics(delta: float) -> State:
 	flip_collision_shapes(movement < 0)
 
 	parent.move_and_slide()
+
+	if parent.is_on_ladder and direction().y < 0:
+		return ladder_climb_state
 
 	if pushing_wall(%HeadCheck, direction().x) or pushing_wall(%WallBodyCheck, direction().x):
 		return standing_state

@@ -1,5 +1,5 @@
 extends State
-
+# TODO: Verify if all these states are required.
 @export var standing_state: State
 @export var walking_state: State
 @export var running_state: State
@@ -8,10 +8,11 @@ extends State
 @export var jumping_state: State
 @export var falling_state: State
 
+
 func enter() -> void:
 	super()
 	parent.velocity = Vector2.ZERO
-	enable_wall_slide_collision(false)
+
 
 func _on_animation_finished() -> void:
 	if animations.animation == animation_name:
@@ -32,10 +33,13 @@ func _on_animation_finished() -> void:
 			else:
 				%StateMachine.change_state(walking_state)
 
+
 func process_physics(delta: float) -> State:
 	parent.velocity.y += gravity * delta
+
 	parent.move_and_slide()
 
 	if !parent.is_on_floor():
 		return falling_state
+
 	return null
