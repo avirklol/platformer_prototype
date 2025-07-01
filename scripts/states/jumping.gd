@@ -27,7 +27,7 @@ func process_physics(delta: float) -> State:
 
 	parent.move_and_slide()
 
-	if parent.is_on_ladder and %LadderBottomCheck.is_colliding() and direction().y < 0:
+	if parent.current_ladder and %LadderBottomCheck.is_colliding() and direction().y < 0:
 		return ladder_climb_state
 
 	if parent.velocity.y > 0:

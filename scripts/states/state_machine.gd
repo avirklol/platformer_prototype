@@ -19,9 +19,9 @@ func init(parent: CharacterBody2D, animations: AnimatedSprite2D, effects: Animat
 		%LadderRelease.timeout.connect(child._on_ladder_release_timeout)
 
 
-
 	# Initialize to the default state
 	change_state(starting_state)
+
 
 # Change to the new state by first calling any exit logic on the current state.
 func change_state(new_state: State) -> void:

@@ -4,19 +4,19 @@
 [ext_resource type="Texture2D" uid="uid://dx85fv3qmaotm" path="res://assets/sprites/things/Ladder/LadderFront.png" id="2_ku54x"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_027jo"]
-size = Vector2(2, 97.46)
+size = Vector2(8, 99.74)
 
-[node name="Area2D" type="Area2D"]
+[node name="Ladder" type="Area2D"]
 collision_mask = 3
 script = ExtResource("1_xb1tl")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Section0" type="Sprite2D" parent="."]
 texture = ExtResource("2_ku54x")
 
-[node name="Sprite2D2" type="Sprite2D" parent="."]
+[node name="Section1" type="Sprite2D" parent="."]
 position = Vector2(0, -44)
 texture = ExtResource("2_ku54x")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -25.25)
+position = Vector2(0, -26.13)
 shape = SubResource("RectangleShape2D_027jo")

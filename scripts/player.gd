@@ -5,11 +5,11 @@ extends CharacterBody2D
 @onready var effects: AnimatedSprite2D = %Effects
 @onready var state_machine: Node = $StateMachine
 @onready var input_handler: Node = $InputHandler
-var is_on_ladder: bool = false
+var current_ladder: Area2D = null
 
 func _ready() -> void:
 	state_machine.init(self, animations, effects, input_handler)
-	add_to_group("character")
+	add_to_group("characters")
 
 func _unhandled_input(event: InputEvent) -> void:
 	state_machine.process_input(event)
@@ -34,8 +34,6 @@ func _physics_process(delta: float) -> void:
 	# " --- " +
 	# "TC ColNorm: " + (str(%TopCheck.get_collision_normal(0)[0]) if %TopCheck.is_colliding() else "N/A") +
 	# " --- " +
-	"Is On Ladder: " + str(is_on_ladder).to_upper() +
-	" --- " +
 	"LTC: " + str(%LadderTopCheck.is_colliding()).to_upper() +
 	" --- " +
 	"LTC ColNorm: " + (str(%LadderTopCheck.get_collision_normal(0)) if %LadderTopCheck.is_colliding() else "N/A") +

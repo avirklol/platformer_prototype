@@ -11,12 +11,14 @@ var effects: AnimatedSprite2D
 var input_handler: Node
 var parent: CharacterBody2D
 
+
 func _on_animation_finished() -> void:
 	pass
 
 
 func _on_ledge_release_timeout() -> void:
 	disable_ledge_grab(false)
+
 
 func _on_ladder_release_timeout() -> void:
 	disable_main_collision(false)
@@ -94,14 +96,11 @@ func disable_ledge_grab(disable: bool, time: float = 0.5) -> void:
 	if disable:
 		%LedgeRelease.start(time)
 		%LedgeGrab.disabled = true
-		%HeadCheck.enabled = false
-		%FloorCheck.enabled = false
 		%TopCheck.enabled = false
 	else:
 		%LedgeGrab.disabled = false
-		%HeadCheck.enabled = true
-		%FloorCheck.enabled = true
 		%TopCheck.enabled = true
+
 
 func disable_ladder_shapes(disable: bool, time: float = 0.5) -> void:
 	if disable:
@@ -112,6 +111,7 @@ func disable_ladder_shapes(disable: bool, time: float = 0.5) -> void:
 		%LadderTopCheck.enabled = true
 		%LadderBottomCheck.enabled = true
 
+
 func disable_main_collision(disable: bool, time: float = 0.2) -> void:
 	if disable:
 		%LadderRelease.start(time)
@@ -120,7 +120,7 @@ func disable_main_collision(disable: bool, time: float = 0.2) -> void:
 		%HeadCheck.enabled = false
 		%WallBodyCheck.enabled = false
 		%WallSlideCheck.enabled = false
-		parent.is_on_ladder = false
+		parent.current_ladder = null
 	else:
 		%MainCollision.disabled = false
 		%LedgeGrab.disabled = false

@@ -10,7 +10,7 @@ var in_collision: bool = false
 
 func enter() -> void:
 	enable_ladder_collision(true)
-
+	center_player()
 
 func exit() -> void:
 	if %StateMachine.next_state != ladder_top_state:
@@ -69,7 +69,7 @@ func process_physics(delta: float) -> State:
 	if parent.is_on_floor():
 			return standing_state
 
-	if !parent.is_on_ladder and !%FloorCheck.is_colliding():
+	if !parent.current_ladder and !%FloorCheck.is_colliding():
 		return falling_state
 
 	if %LadderTopCheck.is_colliding() and direction().y < 0:
@@ -96,3 +96,12 @@ func enable_ladder_collision(enable: bool) -> void:
 		%WallSlideCheck.enabled = true
 		%HeadCheck.enabled = true
 		%WallBodyCheck.enabled = true
+
+
+func center_player() -> void:
+	var ladder = parent.current_ladder
+	if ladder:
+		var ladder_position = ladder.global_position
+		# var ladder_size = ladder.get_node("CollisionShape2D").shape.size
+
+		parent.global_position.x = ladder_position.x

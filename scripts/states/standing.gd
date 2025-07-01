@@ -26,7 +26,7 @@ func process_input(event: InputEvent) -> State:
 	if jumping() and !%TopCheck.is_colliding():
 		return jumping_state
 
-	if parent.is_on_ladder:
+	if parent.current_ladder:
 		if %LadderTopCheck.is_colliding():
 			if direction().y < 0:
 				return ladder_climb_state

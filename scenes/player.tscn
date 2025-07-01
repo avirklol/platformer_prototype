@@ -872,7 +872,7 @@ unique_name_in_owner = true
 z_index = 1
 position = Vector2(0, -40)
 sprite_frames = SubResource("SpriteFrames_md1ol")
-animation = &"standing"
+animation = &"ladder_climbing"
 autoplay = "standing"
 
 [node name="Effects" type="AnimatedSprite2D" parent="PlayerAnimations"]
@@ -892,13 +892,13 @@ position_smoothing_speed = 3.0
 
 [node name="MainCollision" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true
-visible = false
 position = Vector2(0, -20)
 shape = SubResource("RectangleShape2D_3vyb7")
 debug_color = Color(0, 0.603922, 0.670588, 0.439216)
 
 [node name="LadderCollision" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true
+visible = false
 position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_4em36")
 debug_color = Color(0, 0.603922, 0.670588, 0.439216)
@@ -921,7 +921,6 @@ debug_color = Color(0, 0.603922, 0.670588, 0.439216)
 
 [node name="LedgeGrab" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true
-visible = false
 position = Vector2(2.5, -40.4)
 shape = SubResource("RectangleShape2D_holxr")
 one_way_collision = true
@@ -929,7 +928,6 @@ debug_color = Color(0, 0.6, 0.701961, 0.152941)
 
 [node name="TopCheck" type="ShapeCast2D" parent="."]
 unique_name_in_owner = true
-visible = false
 position = Vector2(0, -42)
 shape = SubResource("RectangleShape2D_lxlsd")
 target_position = Vector2(0, 0)
@@ -937,7 +935,7 @@ target_position = Vector2(0, 0)
 [node name="LadderTopCheck" type="ShapeCast2D" parent="."]
 unique_name_in_owner = true
 z_index = 2
-position = Vector2(0, -46)
+position = Vector2(0, -44)
 shape = SubResource("RectangleShape2D_yc32c")
 target_position = Vector2(0, -7)
 collide_with_areas = true
@@ -953,7 +951,9 @@ collide_with_areas = true
 
 [node name="DownClimbCheck" type="ShapeCast2D" parent="."]
 unique_name_in_owner = true
+visible = false
 position = Vector2(-10, 1)
+enabled = false
 shape = SubResource("RectangleShape2D_1pym2")
 target_position = Vector2(0, 0)
 collide_with_areas = true
@@ -1033,7 +1033,7 @@ ladder_climb_state = NodePath("../LadderClimb")
 ladder_climb_down_state = NodePath("../LadderDownClimb")
 animation_name = "standing"
 
-[node name="Walking" type="Node" parent="StateMachine" node_paths=PackedStringArray("standing_state", "running_state", "crouching_state", "crouch_walking_state", "jumping_state", "falling_state", "ladder_climb_state")]
+[node name="Walking" type="Node" parent="StateMachine" node_paths=PackedStringArray("standing_state", "running_state", "crouching_state", "crouch_walking_state", "jumping_state", "falling_state", "ladder_climb_state", "ladder_climb_down_state")]
 script = ExtResource("84_vx63k")
 standing_state = NodePath("../Standing")
 running_state = NodePath("../Running")
@@ -1042,6 +1042,7 @@ crouch_walking_state = NodePath("../CrouchWalking")
 jumping_state = NodePath("../Jumping")
 falling_state = NodePath("../Falling")
 ladder_climb_state = NodePath("../LadderClimb")
+ladder_climb_down_state = NodePath("../LadderDownClimb")
 animation_name = "walking"
 
 [node name="Running" type="Node" parent="StateMachine" node_paths=PackedStringArray("walking_state", "standing_state", "jumping_state", "falling_state", "crouching_state", "stop_running_state")]
