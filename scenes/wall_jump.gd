@@ -1,20 +1,36 @@
 extends State
 
-@export var jump_force: float = 300.0
+@export var jump_force: float = 150.0
 @export var falling_state: State
 @export var wall_slide_state: State
 
+
 func enter() -> void:
 	super()
-	parent.velocity.y = -jump_force
-	parent.velocity.x = direction().x * jump_force * 0.5
+	parent.velocity.y = -jump_force * 3
+	if %WallBodyCheck.get_collision_normal(0)[0] < 0:
+		parent.velocity.x = -jump_force
+		flip_animations(true)
+		flip_collision_shapes(true)
+	else:
+		parent.velocity.x = jump_force
+		flip_animations(false)
+		flip_collision_shapes(false)
+
+
+func _on_animation_finished() -> void:
+	if animations.animation == animation_name:
+		var movement = direction().x * move_speed
+		parent.velocity.x = movement
+		if !pushing_wall(%WallSlideCheck, direction().x):
+			%StateMachine.change_state(falling_state)
+		else:
+			%StateMachine.change_state(wall_slide_state)
+
 
 func process_physics(delta: float) -> State:
 	parent.velocity.y += gravity * delta
-	parent.velocity.x = direction().x * jump_force * 0.5
+
 	parent.move_and_slide()
 
-	if !player_blocked_by_wall(%WallBodyCheck, direction().x):
-		return falling_state
-	else:
-		return wall_slide_state
+	return null
