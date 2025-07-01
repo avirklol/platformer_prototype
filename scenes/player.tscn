@@ -898,7 +898,6 @@ debug_color = Color(0, 0.603922, 0.670588, 0.439216)
 
 [node name="LadderCollision" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true
-visible = false
 position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_4em36")
 debug_color = Color(0, 0.603922, 0.670588, 0.439216)
@@ -921,6 +920,7 @@ debug_color = Color(0, 0.603922, 0.670588, 0.439216)
 
 [node name="LedgeGrab" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true
+visible = false
 position = Vector2(2.5, -40.4)
 shape = SubResource("RectangleShape2D_holxr")
 one_way_collision = true
@@ -960,7 +960,6 @@ collide_with_areas = true
 
 [node name="JumpCheck" type="ShapeCast2D" parent="."]
 unique_name_in_owner = true
-visible = false
 position = Vector2(0, -38)
 shape = SubResource("RectangleShape2D_p5nqv")
 target_position = Vector2(0, -14)
@@ -974,6 +973,7 @@ target_position = Vector2(0, 21)
 
 [node name="HeadCheck" type="ShapeCast2D" parent="."]
 unique_name_in_owner = true
+visible = false
 position = Vector2(0, -38.4)
 shape = SubResource("RectangleShape2D_ha2mi")
 exclude_parent = false
@@ -981,6 +981,7 @@ target_position = Vector2(11, 0)
 
 [node name="RunCheck" type="ShapeCast2D" parent="."]
 unique_name_in_owner = true
+visible = false
 position = Vector2(0, -20)
 shape = SubResource("RectangleShape2D_b5l0c")
 exclude_parent = false
@@ -995,6 +996,7 @@ target_position = Vector2(0, -2)
 
 [node name="WallBodyCheck" type="ShapeCast2D" parent="."]
 unique_name_in_owner = true
+visible = false
 position = Vector2(0, -28)
 shape = SubResource("RectangleShape2D_irpag")
 target_position = Vector2(0, 16)

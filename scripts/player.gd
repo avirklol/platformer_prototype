@@ -7,12 +7,15 @@ extends CharacterBody2D
 @onready var input_handler: Node = $InputHandler
 var current_ladder: Area2D = null
 
+
 func _ready() -> void:
 	state_machine.init(self, animations, effects, input_handler)
 	add_to_group("characters")
 
+
 func _unhandled_input(event: InputEvent) -> void:
 	state_machine.process_input(event)
+
 
 func _physics_process(delta: float) -> void:
 	state_machine.process_physics(delta)
