@@ -168,11 +168,11 @@
 [ext_resource type="Texture2D" uid="uid://c6wwu75qq00d1" path="res://assets/sprites/player/FX/CrouchDustBack/CrouchDustBack08.png" id="96_8pj6w"]
 [ext_resource type="Script" uid="uid://braxqqi3mjr0j" path="res://scripts/states/ledge_climb.gd" id="97_b5l0c"]
 [ext_resource type="Script" uid="uid://cpgoqphpwx5fd" path="res://scripts/states/wall_slide.gd" id="98_2a33p"]
-[ext_resource type="Script" uid="uid://co1r7xdv6bs1h" path="res://scenes/wall_jump.gd" id="123_kg5hq"]
+[ext_resource type="Script" uid="uid://co1r7xdv6bs1h" path="res://scripts/states/wall_jump.gd" id="123_kg5hq"]
 [ext_resource type="Script" uid="uid://bbaeio857kk34" path="res://scripts/states/ladder_climb.gd" id="148_i18u8"]
 [ext_resource type="Script" uid="uid://cmr65k4xdsj4b" path="res://scripts/states/ladder_top_out.gd" id="169_4em36"]
 [ext_resource type="Script" uid="uid://bmqwdelr81nnp" path="res://scripts/states/sliding.gd" id="169_drj81"]
-[ext_resource type="Script" uid="uid://dmnl05egf0nir" path="res://scenes/ladder_down_climb.gd" id="169_yc32c"]
+[ext_resource type="Script" uid="uid://dmnl05egf0nir" path="res://scripts/states/ladder_down_climb.gd" id="169_yc32c"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_lxlsd"]
 
@@ -863,6 +863,7 @@ subpixel_positioning = 0
 keep_rounding_remainders = false
 
 [node name="Player" type="CharacterBody2D"]
+texture_filter = 1
 material = SubResource("CanvasItemMaterial_lxlsd")
 collision_layer = 2
 script = ExtResource("1_g2els")
@@ -870,6 +871,7 @@ script = ExtResource("1_g2els")
 [node name="PlayerAnimations" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
 z_index = 1
+texture_filter = 1
 position = Vector2(0, -40)
 sprite_frames = SubResource("SpriteFrames_md1ol")
 animation = &"ladder_climbing"

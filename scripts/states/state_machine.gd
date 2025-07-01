@@ -6,6 +6,7 @@ var current_state: State
 var previous_state: State
 var next_state: State
 
+
 # Initialize the state machine by giving each child state a reference to the
 # parent object it belongs to and enter the default starting_state.
 func init(parent: CharacterBody2D, animations: AnimatedSprite2D, effects: AnimatedSprite2D, input_handler: Node) -> void:
@@ -36,6 +37,7 @@ func change_state(new_state: State) -> void:
 	print(current_state.name)
 	%StateDebug.text = str(current_state.name).to_upper()
 
+
 # Pass through functions for the Player to call,
 # handling state changes as needed.
 func process_physics(delta: float) -> void:
@@ -43,10 +45,12 @@ func process_physics(delta: float) -> void:
 	if new_state:
 		change_state(new_state)
 
+
 func process_input(event: InputEvent) -> void:
 	var new_state = current_state.process_input(event)
 	if new_state:
 		change_state(new_state)
+
 
 func process_frame(delta: float) -> void:
 	var new_state = current_state.process_frame(delta)
