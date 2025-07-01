@@ -5,6 +5,7 @@ extends State
 @export var jumping_state: State
 @export var falling_state: State
 @export var ladder_climb_state: State
+@export var ladder_climb_down_state: State
 
 
 func enter() -> void:
@@ -37,8 +38,14 @@ func process_physics(delta: float) -> State:
 	parent.velocity.y += gravity * delta
 	parent.move_and_slide()
 
-	if parent.current_ladder and direction().y < 0:
-		return ladder_climb_state
+	if parent.current_ladder:
+		if %LadderTopCheck.is_colliding():
+			if direction().y < 0:
+				return ladder_climb_state
+
+		if %LadderBottomCheck.is_colliding() and !%LadderTopCheck.is_colliding():
+			if direction().y > 0:
+				return ladder_climb_down_state
 
 	if !parent.is_on_floor():
 		return falling_state
