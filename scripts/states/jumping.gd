@@ -12,6 +12,7 @@ extends State
 func enter() -> void:
 	super()
 	parent.velocity.y = -jump_force
+	%LedgeGrab.disabled = true
 	# initial_velocity = parent.velocity #TODO: Implement velocity carryover from grounded movement.
 
 
@@ -27,8 +28,10 @@ func process_physics(delta: float) -> State:
 
 	parent.move_and_slide()
 
-	if parent.current_ladder and %LadderBottomCheck.is_colliding() and direction().y < 0:
-		return ladder_climb_state
+	if parent.current_ladder:
+		if %LadderBottomCheck.is_colliding() and %LadderTopCheck.is_colliding():
+			if direction().y < 0:
+				return ladder_climb_state
 
 	if parent.velocity.y > 0:
 		return falling_state
