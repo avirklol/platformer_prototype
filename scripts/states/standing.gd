@@ -11,7 +11,6 @@ extends State
 func enter() -> void:
 	super()
 	parent.velocity = Vector2.ZERO
-	%LedgeGrab.disabled = false
 
 
 func process_input(event: InputEvent) -> State:
@@ -23,7 +22,7 @@ func process_input(event: InputEvent) -> State:
 	if crouch_toggle():
 		return crouching_state
 
-	if jumping() and !%TopCheck.is_colliding():
+	if jumping() and !%JumpCheck.is_colliding():
 		return jumping_state
 
 	if parent.current_ladder:
