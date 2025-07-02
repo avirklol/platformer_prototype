@@ -31,8 +31,8 @@ func _physics_process(delta: float) -> void:
 	# " --- " +
 	# "RC: " + str(%RunCheck.is_colliding()).to_upper() +
 	# " --- " +
-	# "FC: " + str(%FloorCheck.is_colliding()).to_upper() +
-	# " --- " +
+	"FC: " + str(%FloorCheck.is_colliding()).to_upper() +
+	" --- " +
 	# "TC: " + str(%TopCheck.is_colliding()).to_upper() +
 	# " --- " +
 	# "TC ColNorm: " + (str(%TopCheck.get_collision_normal(0)[0]) if %TopCheck.is_colliding() else "N/A") +
