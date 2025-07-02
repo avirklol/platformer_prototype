@@ -39,7 +39,6 @@ func enable_wall_slide_collision(enable: bool) -> void:
 	if enable:
 		# Disabled CollisionShapes
 		%MainCollision.disabled = true
-		%LedgeGrab.disabled = true
 		# Disabled ShapeCasts
 		%HeadCheck.enabled = false
 		# Enabled CollisionShapes
@@ -48,7 +47,6 @@ func enable_wall_slide_collision(enable: bool) -> void:
 	else:
 		# Enabled CollisionShapes
 		%MainCollision.disabled = false
-		%LedgeGrab.disabled = false
 		# Enabled ShapeCasts
 		%HeadCheck.enabled = true
 		# Disabled CollisionShapes
