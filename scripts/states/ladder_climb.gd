@@ -90,6 +90,8 @@ func enable_ladder_collision(enable: bool) -> void:
 		%WallSlideCheck.enabled = false
 		%HeadCheck.enabled = false
 		%WallBodyCheck.enabled = false
+		# Enabled CollisionShapes
+		%LadderCollision.disabled = false
 	else:
 		# Enabled CollisionShapes
 		%MainCollision.disabled = false
@@ -98,6 +100,8 @@ func enable_ladder_collision(enable: bool) -> void:
 		%WallSlideCheck.enabled = true
 		%HeadCheck.enabled = true
 		%WallBodyCheck.enabled = true
+		# Disabled CollisionShapes
+		%LadderCollision.disabled = true
 
 
 func center_player() -> void:
