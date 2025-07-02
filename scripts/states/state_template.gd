@@ -82,17 +82,20 @@ func flip_collision_shapes(flip: bool) -> void:
 	var down_climb_shape_pos = %DownClimbCheck.position
 	var head_check_pos = %HeadCheck.target_position
 	var run_check_pos = %RunCheck.target_position
+	var against_wall_check_pos = %AgainstWallCheck.target_position
 	head_check_pos.x = -abs(head_check_pos.x) if flip else abs(head_check_pos.x)
 	run_check_pos.x = -abs(run_check_pos.x) if flip else abs(run_check_pos.x)
 	down_climb_pos.x = abs(down_climb_pos.x) if flip else -abs(down_climb_pos.x)
 	down_climb_shape_pos.x = abs(down_climb_shape_pos.x) if flip else -abs(down_climb_shape_pos.x)
+	against_wall_check_pos.x = -abs(against_wall_check_pos.x) if flip else abs(against_wall_check_pos.x)
+	%AgainstWallCheck.target_position = against_wall_check_pos
 	%DownClimbCheck.target_position = down_climb_pos
 	%DownClimbCheck.position = down_climb_shape_pos
 	%HeadCheck.target_position = head_check_pos
 	%RunCheck.target_position = run_check_pos
 
 
-func disable_ledge_grab(disable: bool, time: float = 0.5) -> void:
+func disable_ledge_grab(disable: bool, time: float = 0.3) -> void:
 	if disable:
 		%LedgeRelease.start(time)
 		%LedgeGrab.disabled = true
@@ -132,7 +135,6 @@ func disable_main_collision(disable: bool, time: float = 0.2) -> void:
 func pushing_wall(shapecast, x_direction) -> bool:
 	if shapecast.is_colliding():
 		if (shapecast.get_collision_normal(0)[0] < 0 and x_direction > 0) or (shapecast.get_collision_normal(0)[0] > 0 and x_direction < 0):
-			print("Player pushing wall")
 			return true
-	# print("Player not pushing wall")
+
 	return false
