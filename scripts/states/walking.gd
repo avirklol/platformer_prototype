@@ -22,7 +22,7 @@ func process_input(event: InputEvent) -> State:
 			return running_state
 		if crouch_toggle():
 			return crouch_walking_state
-		if jumping():
+		if jumping() and !%JumpCheck.is_colliding():
 			return jumping_state
 		return null
 
