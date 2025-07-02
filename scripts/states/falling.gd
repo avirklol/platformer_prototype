@@ -16,8 +16,14 @@ var high_fall: bool = false
 func enter() -> void:
 	super()
 	high_fall = false
+	if !%AgainstWallCheck.is_colliding():
+		%LedgeGrab.disabled = false
 	# initial_velocity = parent.velocity #TODO: Implement velocity carryover from grounded movement.
 
+
+func exit() -> void:
+	if %StateMachine.next_state != ledge_grab_state:
+		%LedgeGrab.disabled = true
 
 func process_physics(delta: float) -> State:
 	var movement = direction().x * move_speed
@@ -34,11 +40,13 @@ func process_physics(delta: float) -> State:
 
 	parent.move_and_slide()
 
-	if parent.current_ladder and %LadderBottomCheck.is_colliding() and direction().y < 0:
-		return ladder_climb_state
+	if parent.current_ladder:
+		if %LadderBottomCheck.is_colliding() and %LadderTopCheck.is_colliding():
+			if direction().y < 0:
+				return ladder_climb_state
 
 	if parent.is_on_floor():
-		if %WallBodyCheck.is_colliding() and !%FloorCheck.is_colliding() and !%TopCheck.is_colliding():
+		if %WallBodyCheck.is_colliding() and !%FloorCheck.is_colliding() and !%TopCheck.is_colliding() and !%AgainstWallCheck.is_colliding():
 				return ledge_grab_state
 		else:
 			if high_fall:
