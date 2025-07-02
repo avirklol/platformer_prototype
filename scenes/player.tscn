@@ -814,7 +814,7 @@ animations = [{
 size = Vector2(12.5, 40.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4em36"]
-size = Vector2(12.5, 1)
+size = Vector2(12.5, 4)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bpsgo"]
 size = Vector2(11.5, 40.5)
@@ -823,10 +823,10 @@ size = Vector2(11.5, 40.5)
 size = Vector2(18, 25)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_holxr"]
-size = Vector2(14, 0)
+size = Vector2(14, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lxlsd"]
-size = Vector2(17, 3)
+size = Vector2(16, 3)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yc32c"]
 size = Vector2(5, 3)
@@ -834,10 +834,10 @@ size = Vector2(5, 3)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nswu7"]
 size = Vector2(5, 3)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_1pym2"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p5nqv"]
 size = Vector2(5, 3)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_p5nqv"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1pym2"]
 size = Vector2(5, 3)
 
 [sub_resource type="SeparationRayShape2D" id="SeparationRayShape2D_lxlsd"]
@@ -900,7 +900,8 @@ debug_color = Color(0, 0.603922, 0.670588, 0.439216)
 
 [node name="LadderCollision" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(0, -0.5)
+visible = false
+position = Vector2(0, -2)
 shape = SubResource("RectangleShape2D_4em36")
 debug_color = Color(0, 0.603922, 0.670588, 0.439216)
 
@@ -922,9 +923,9 @@ debug_color = Color(0, 0.603922, 0.670588, 0.439216)
 
 [node name="LedgeGrab" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true
-visible = false
 position = Vector2(2.5, -40.4)
 shape = SubResource("RectangleShape2D_holxr")
+disabled = true
 one_way_collision = true
 debug_color = Color(0, 0.6, 0.701961, 0.152941)
 
@@ -936,6 +937,7 @@ target_position = Vector2(0, 0)
 
 [node name="LadderTopCheck" type="ShapeCast2D" parent="."]
 unique_name_in_owner = true
+visible = false
 z_index = 2
 position = Vector2(0, -44)
 shape = SubResource("RectangleShape2D_yc32c")
@@ -945,11 +947,18 @@ collide_with_bodies = false
 
 [node name="LadderBottomCheck" type="ShapeCast2D" parent="."]
 unique_name_in_owner = true
+visible = false
 z_index = 2
 position = Vector2(0, -4)
 shape = SubResource("RectangleShape2D_nswu7")
 target_position = Vector2(0, 2)
 collide_with_areas = true
+
+[node name="JumpCheck" type="ShapeCast2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -38)
+shape = SubResource("RectangleShape2D_p5nqv")
+target_position = Vector2(0, -14)
 
 [node name="DownClimbCheck" type="ShapeCast2D" parent="."]
 unique_name_in_owner = true
@@ -960,18 +969,18 @@ shape = SubResource("RectangleShape2D_1pym2")
 target_position = Vector2(0, 0)
 collide_with_areas = true
 
-[node name="JumpCheck" type="ShapeCast2D" parent="."]
+[node name="AgainstWallCheck" type="ShapeCast2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(0, -38)
-shape = SubResource("RectangleShape2D_p5nqv")
-target_position = Vector2(0, -14)
+position = Vector2(0, -45)
+shape = SubResource("RectangleShape2D_1pym2")
+target_position = Vector2(14, 0)
+collision_mask = 16
 
 [node name="FloorCheck" type="ShapeCast2D" parent="."]
 unique_name_in_owner = true
-visible = false
 position = Vector2(0, -40)
 shape = SubResource("SeparationRayShape2D_lxlsd")
-target_position = Vector2(0, 21)
+target_position = Vector2(0, 22)
 
 [node name="HeadCheck" type="ShapeCast2D" parent="."]
 unique_name_in_owner = true
@@ -998,7 +1007,6 @@ target_position = Vector2(0, -2)
 
 [node name="WallBodyCheck" type="ShapeCast2D" parent="."]
 unique_name_in_owner = true
-visible = false
 position = Vector2(0, -28)
 shape = SubResource("RectangleShape2D_irpag")
 target_position = Vector2(0, 16)
