@@ -80,6 +80,7 @@ region_enabled = true
 region_rect = Rect2(16, 80, 48, 16)
 
 [node name="PressurePlate" type="Area2D" parent="."]
+visible = false
 position = Vector2(0, -2.98023e-08)
 scale = Vector2(0.9, 0.9)
 
