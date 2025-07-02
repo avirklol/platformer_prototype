@@ -74,8 +74,6 @@ func enable_crouch_collision(enable: bool) -> void:
 		%CrouchCollision.disabled = false
 		# Enabled ShapeCasts
 		%CrouchWallBodyCheck.enabled = true
-		# Resized Objects
-		%TopCheck.shape.size.x = 17
 	else:
 		# Enabled CollisionShapes
 		%MainCollision.disabled = false
@@ -88,5 +86,3 @@ func enable_crouch_collision(enable: bool) -> void:
 		%CrouchCollision.disabled = true
 		# Disabled ShapeCasts
 		%CrouchWallBodyCheck.enabled = false
-		# Resized Objects
-		%TopCheck.shape.size.x = 20
