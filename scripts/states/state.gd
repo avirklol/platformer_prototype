@@ -2,6 +2,7 @@ class_name State
 extends Node
 
 @export var animation_name: String
+@export var effect_name: String
 
 var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 
