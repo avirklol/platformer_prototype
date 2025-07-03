@@ -30,7 +30,7 @@ func exit() -> void:
 		%LedgeGrab.disabled = true
 
 func process_physics(delta: float) -> State:
-	var movement = direction().x * walk_speed
+	var movement = direction().x * %Stats.force.walk
 
 	parent.velocity.y += gravity * delta
 	parent.velocity.x = movement

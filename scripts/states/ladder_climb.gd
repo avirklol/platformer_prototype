@@ -55,9 +55,9 @@ func process_physics(delta: float) -> State:
 	var movement_y = 0
 
 	if direction().y < 0:
-		movement_y = -climb_speed
+		movement_y = -%Stats.force.climb
 	elif direction().y > 0:
-		movement_y = climb_speed
+		movement_y = %Stats.force.climb
 
 	if movement_y != 0:
 		parent.velocity.y = movement_y

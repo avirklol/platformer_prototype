@@ -10,13 +10,13 @@ extends State
 
 func enter() -> void:
 	super()
-	parent.velocity.y = -jump_force
+	parent.velocity.y = -%Stats.force.jump
 	%LedgeGrab.disabled = true
 	# initial_velocity = parent.velocity #TODO: Implement velocity carryover from grounded movement.
 
 
 func process_physics(delta: float) -> State:
-	var movement = direction().x * walk_speed
+	var movement = direction().x * %Stats.force.walk
 
 	if movement != 0:
 		flip_animations(movement < 0)
