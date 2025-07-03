@@ -28,12 +28,12 @@ func process_input(event: InputEvent) -> State:
 
 
 func process_physics(delta: float) -> State:
-	var movement = direction().x * move_speed
+	var movement = direction().x * walk_speed
 
 	if direction().x > 0:
-		movement = 1 * move_speed
+		movement = 1 * walk_speed
 	else:
-		movement = -1 * move_speed
+		movement = -1 * walk_speed
 
 	parent.velocity.x = movement
 	parent.velocity.y += gravity * delta

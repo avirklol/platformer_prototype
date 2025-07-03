@@ -31,23 +31,24 @@ func _physics_process(delta: float) -> void:
 	# " --- " +
 	# "RC: " + str(%RunCheck.is_colliding()).to_upper() +
 	# " --- " +
-	"FC: " + str(%FloorCheck.is_colliding()).to_upper() +
-	" --- " +
-	# "TC: " + str(%TopCheck.is_colliding()).to_upper() +
+	# "FC: " + str(%FloorCheck.is_colliding()).to_upper() +
 	# " --- " +
-	# "TC ColNorm: " + (str(%TopCheck.get_collision_normal(0)[0]) if %TopCheck.is_colliding() else "N/A") +
+	# # "TC: " + str(%TopCheck.is_colliding()).to_upper() +
+	# # " --- " +
+	# # "TC ColNorm: " + (str(%TopCheck.get_collision_normal(0)[0]) if %TopCheck.is_colliding() else "N/A") +
+	# # " --- " +
+	# "LTC: " + str(%LadderTopCheck.is_colliding()).to_upper() +
 	# " --- " +
-	"LTC: " + str(%LadderTopCheck.is_colliding()).to_upper() +
-	" --- " +
-	"LTC ColNorm: " + (str(%LadderTopCheck.get_collision_normal(0)) if %LadderTopCheck.is_colliding() else "N/A") +
-	" --- " +
-	"LBC: " + str(%LadderBottomCheck.is_colliding()).to_upper() +
-	" --- " +
-	"LBC ColNorm: " + (str(%LadderBottomCheck.get_collision_normal(0)) if %LadderBottomCheck.is_colliding() else "N/A") +
-	" --- " +
-	"DC: " + str(%DownClimbCheck.is_colliding()).to_upper() +
-	" --- " +
-	"DC ColNorm: " + (str(%DownClimbCheck.get_collision_normal(0)) if %DownClimbCheck.is_colliding() else "N/A")
+	# "LTC ColNorm: " + (str(%LadderTopCheck.get_collision_normal(0)) if %LadderTopCheck.is_colliding() else "N/A") +
+	# " --- " +
+	# "LBC: " + str(%LadderBottomCheck.is_colliding()).to_upper() +
+	# " --- " +
+	# "LBC ColNorm: " + (str(%LadderBottomCheck.get_collision_normal(0)) if %LadderBottomCheck.is_colliding() else "N/A") +
+	# " --- " +
+	# "DC: " + str(%DownClimbCheck.is_colliding()).to_upper() +
+	# " --- " +
+	# "DC ColNorm: " + (str(%DownClimbCheck.get_collision_normal(0)) if %DownClimbCheck.is_colliding() else "N/A") +
+	# " --- " +
 	# "OF: " + str(is_on_floor()).to_upper()
 	)
 

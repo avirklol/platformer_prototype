@@ -4,7 +4,6 @@ extends State
 @export var ledge_grab_state: State
 @export var standing_state: State
 @export var ladder_climb_state: State
-@export var jump_force: float = 300
 
 # var initial_velocity: Vector2 = Vector2.ZERO #TODO: Implement velocity carryover from grounded movement.
 
@@ -17,7 +16,7 @@ func enter() -> void:
 
 
 func process_physics(delta: float) -> State:
-	var movement = direction().x * move_speed
+	var movement = direction().x * walk_speed
 
 	if movement != 0:
 		flip_animations(movement < 0)

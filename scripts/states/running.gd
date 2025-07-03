@@ -39,10 +39,10 @@ func process_physics(delta: float) -> State:
 	var movement = 0
 
 	if direction().x > 0:
-		movement = 1 * move_speed
+		movement = 1 * run_speed
 		run_direction_history = 1.0
 	else:
-		movement = -1 * move_speed
+		movement = -1 * run_speed
 		run_direction_history = -1.0
 
 	parent.velocity.x = movement

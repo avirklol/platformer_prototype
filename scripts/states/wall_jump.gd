@@ -20,7 +20,7 @@ func enter() -> void:
 
 func _on_animation_finished() -> void:
 	if animations.animation == animation_name:
-		var movement = direction().x * move_speed
+		var movement = direction().x * walk_speed
 		parent.velocity.x = movement
 		if !pushing_wall(%WallSlideCheck, direction().x):
 			%StateMachine.change_state(falling_state)

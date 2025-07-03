@@ -151,7 +151,7 @@
 [ext_resource type="Texture2D" uid="uid://bnluohf4rxsth" path="res://assets/sprites/player/Slide/Slide03.png" id="90_4em36"]
 [ext_resource type="Texture2D" uid="uid://bmimygus3y7bn" path="res://assets/sprites/player/FX/CrouchDustBack/CrouchDustBack02.png" id="90_kg5hq"]
 [ext_resource type="Script" uid="uid://bohjayrxe7bso" path="res://scripts/states/landing.gd" id="90_ljgr3"]
-[ext_resource type="Script" uid="uid://dmp8xm1einns" path="res://scripts/stats.gd" id="91_4vfid"]
+[ext_resource type="Script" uid="uid://dmp8xm1einns" path="res://scripts/player_stats.gd" id="91_4vfid"]
 [ext_resource type="Texture2D" uid="uid://dvwmt36b6o55" path="res://assets/sprites/player/FX/WallJumpDust/WallJumpDust02.png" id="91_dqoq3"]
 [ext_resource type="Script" uid="uid://dhla5xj76jpkv" path="res://scripts/states/stop_running.gd" id="91_fr8ja"]
 [ext_resource type="Texture2D" uid="uid://bewul35f26e12" path="res://assets/sprites/player/FX/CrouchDustBack/CrouchDustBack03.png" id="91_kp0if"]
@@ -1066,7 +1066,6 @@ falling_state = NodePath("../Falling")
 crouching_state = NodePath("../Crouching")
 stop_running_state = NodePath("../StopRunning")
 animation_name = "running"
-move_speed = 200.0
 
 [node name="Crouching" type="Node" parent="StateMachine" node_paths=PackedStringArray("standing_state", "crouch_walking_state", "jumping_state", "falling_state", "ladder_climb_state", "ladder_climb_down_state")]
 script = ExtResource("86_ry8ed")
@@ -1077,7 +1076,6 @@ falling_state = NodePath("../Falling")
 ladder_climb_state = NodePath("../LadderClimb")
 ladder_climb_down_state = NodePath("../LadderDownClimb")
 animation_name = "crouching"
-move_speed = 50.0
 
 [node name="CrouchWalking" type="Node" parent="StateMachine" node_paths=PackedStringArray("crouching_state", "walking_state", "jumping_state", "falling_state", "ladder_climb_state", "ladder_climb_down_state")]
 script = ExtResource("89_cbf1i")
@@ -1088,7 +1086,6 @@ falling_state = NodePath("../Falling")
 ladder_climb_state = NodePath("../LadderClimb")
 ladder_climb_down_state = NodePath("../LadderDownClimb")
 animation_name = "crouch_walking"
-move_speed = 50.0
 
 [node name="Jumping" type="Node" parent="StateMachine" node_paths=PackedStringArray("falling_state", "ledge_grab_state", "standing_state", "ladder_climb_state")]
 script = ExtResource("87_au8ao")
@@ -1158,6 +1155,7 @@ animation_name = "wall_sliding"
 
 [node name="WallJump" type="Node" parent="StateMachine" node_paths=PackedStringArray("falling_state", "wall_slide_state")]
 script = ExtResource("123_kg5hq")
+jump_force = null
 falling_state = NodePath("../Falling")
 wall_slide_state = NodePath("../WallSlide")
 animation_name = "wall_jumping"

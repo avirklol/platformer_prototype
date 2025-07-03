@@ -17,7 +17,7 @@ func exit() -> void:
 
 
 func process_physics(delta: float) -> State:
-	var movement = direction().x * move_speed
+	var movement = direction().x * walk_speed
 	parent.velocity.x = movement
 	parent.velocity.y += gravity * delta
 	parent.velocity.y *= 0.86
@@ -39,6 +39,7 @@ func enable_wall_slide_collision(enable: bool) -> void:
 	if enable:
 		# Disabled CollisionShapes
 		%MainCollision.disabled = true
+		%LedgeGrab.disabled = true
 		# Disabled ShapeCasts
 		%HeadCheck.enabled = false
 		# Enabled CollisionShapes

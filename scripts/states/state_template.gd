@@ -1,8 +1,13 @@
 class_name State
 extends Node
 
+@onready var walk_speed: float = %Stats.walk_speed
+@onready var run_speed: float = %Stats.run_speed
+@onready var crouch_speed: float = %Stats.crouch_speed
+@onready var climb_speed: float = %Stats.climb_speed
+@onready var jump_force: float = %Stats.jump_force
+
 @export var animation_name: String
-@export var move_speed: float = 100
 
 var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 
