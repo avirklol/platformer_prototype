@@ -17,6 +17,7 @@ var death: bool = false
 
 func enter() -> void:
 	super()
+	%Camera2D.position_smoothing_speed = 50.0
 	high_fall = false
 	death = false
 	if !%AgainstWallCheck.is_colliding():

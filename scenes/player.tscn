@@ -931,6 +931,7 @@ autoplay = "none"
 frame_progress = 0.104893
 
 [node name="Camera2D" type="Camera2D" parent="."]
+unique_name_in_owner = true
 offset = Vector2(0, -60)
 zoom = Vector2(4, 4)
 position_smoothing_enabled = true

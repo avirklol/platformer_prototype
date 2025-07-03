@@ -6,6 +6,7 @@ extends State
 func enter() -> void:
 	super()
 
+
 func _on_animation_finished() -> void:
 	if animations.animation == animation_name:
 		parent.position.x += 14 if %WallBodyCheck.get_collision_normal(0)[0] < 0 else -14

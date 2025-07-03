@@ -10,6 +10,7 @@ func enter() -> void:
 	center_player()
 	animations.play_backwards(animation_name)
 
+
 func _on_animation_finished() -> void:
 	if animations.animation == animation_name:
 		%StateMachine.change_state(ladder_climb_state)
