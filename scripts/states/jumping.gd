@@ -11,7 +11,6 @@ extends State
 func enter() -> void:
 	super()
 	parent.velocity.y = -%Stats.force.jump
-	%LedgeGrab.disabled = true
 	# initial_velocity = parent.velocity #TODO: Implement velocity carryover from grounded movement.
 
 

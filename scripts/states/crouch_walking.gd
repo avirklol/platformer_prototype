@@ -65,7 +65,6 @@ func enable_crouch_collision(enable: bool) -> void:
 	if enable:
 		# Disabled CollisionShapes
 		%MainCollision.disabled = true
-		%LedgeGrab.disabled = true
 		# Disabled ShapeCasts
 		%HeadCheck.enabled = false
 		%WallBodyCheck.enabled = false
@@ -77,7 +76,6 @@ func enable_crouch_collision(enable: bool) -> void:
 	else:
 		# Enabled CollisionShapes
 		%MainCollision.disabled = false
-		%LedgeGrab.disabled = false
 		# Enabled ShapeCasts
 		%HeadCheck.enabled = true
 		%WallBodyCheck.enabled = true

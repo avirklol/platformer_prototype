@@ -11,7 +11,6 @@ func enter() -> void:
 
 func process_physics(delta: float) -> State:
 	if direction().y > 0:
-		disable_ledge_grab(true)
 		parent.position.x += -4 if %WallBodyCheck.get_collision_normal(0)[0] < 0 else 4
 		return falling_state
 

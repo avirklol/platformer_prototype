@@ -15,10 +15,6 @@ func _on_animation_finished() -> void:
 	pass
 
 
-func _on_ledge_release_timeout() -> void:
-	disable_ledge_grab(false)
-
-
 func _on_ladder_release_timeout() -> void:
 	disable_main_collision(false)
 	disable_ladder_shapes(false)
@@ -92,16 +88,6 @@ func flip_collision_shapes(flip: bool) -> void:
 	%DownClimbCheck.position = down_climb_shape_pos
 	%HeadCheck.target_position = head_check_pos
 	%RunCheck.target_position = run_check_pos
-
-
-func disable_ledge_grab(disable: bool, time: float = 0.3) -> void:
-	if disable:
-		%LedgeRelease.start(time)
-		%LedgeGrab.disabled = true
-		%TopCheck.enabled = false
-	else:
-		%LedgeGrab.disabled = false
-		%TopCheck.enabled = true
 
 
 func disable_ladder_shapes(disable: bool, time: float = 0.5) -> void:

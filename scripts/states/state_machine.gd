@@ -16,7 +16,6 @@ func init(parent: CharacterBody2D, animations: AnimatedSprite2D, effects: Animat
 		child.effects = effects
 		child.input_handler = input_handler
 		child.animations.animation_finished.connect(child._on_animation_finished)
-		%LedgeRelease.timeout.connect(child._on_ledge_release_timeout)
 		%LadderRelease.timeout.connect(child._on_ladder_release_timeout)
 
 
