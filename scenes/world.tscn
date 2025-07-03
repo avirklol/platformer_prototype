@@ -457,7 +457,7 @@ autoplay = "side_to_side"
 
 [node name="CharacterBody2D" parent="." instance=ExtResource("2_rwgxs")]
 z_index = 5
-position = Vector2(-68, -506)
+position = Vector2(-111, 112)
 floor_stop_on_slope = false
 
 [node name="Map" type="Node" parent="."]
