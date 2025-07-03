@@ -25,10 +25,10 @@ func exit() -> void:
 
 func process_frame(delta: float) -> State:
 	if direction().y < 0:
-		animations.play("ladder_climbing")
+		animations.play(animation_name)
 		return null
 	elif direction().y > 0 and !parent.is_on_floor():
-		animations.play_backwards("ladder_climbing")
+		animations.play_backwards(animation_name)
 		return null
 	else:
 		animations.pause()
