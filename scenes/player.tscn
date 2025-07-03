@@ -1155,7 +1155,6 @@ animation_name = "wall_sliding"
 
 [node name="WallJump" type="Node" parent="StateMachine" node_paths=PackedStringArray("falling_state", "wall_slide_state")]
 script = ExtResource("123_kg5hq")
-jump_force = null
 falling_state = NodePath("../Falling")
 wall_slide_state = NodePath("../WallSlide")
 animation_name = "wall_jumping"

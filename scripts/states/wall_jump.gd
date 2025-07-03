@@ -5,7 +5,7 @@ extends State
 
 func enter() -> void:
 	super()
-	parent.velocity.y = -jump_force * 2
+	parent.velocity.y = -jump_force * 1.5
 	if %WallBodyCheck.get_collision_normal(0)[0] < 0:
 		parent.velocity.x = -jump_force / 2
 		flip_animations(true)
