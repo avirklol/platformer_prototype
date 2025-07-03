@@ -8,14 +8,17 @@ extends State
 @export var landing_state: State
 @export var wall_slide_state: State
 @export var ladder_climb_state: State
+@export var death_state: State
 
 var high_fall: bool = false
+var death: bool = false
 # var initial_velocity: Vector2 = Vector2.ZERO #TODO: Implement velocity carryover from grounded movement.
 
 
 func enter() -> void:
 	super()
 	high_fall = false
+	death = false
 	if !%AgainstWallCheck.is_colliding():
 		%LedgeGrab.disabled = false
 	# initial_velocity = parent.velocity #TODO: Implement velocity carryover from grounded movement.
@@ -30,9 +33,13 @@ func process_physics(delta: float) -> State:
 
 	parent.velocity.y += gravity * delta
 	parent.velocity.x = movement
+	print(parent.velocity.y)
 
 	if parent.velocity.y > %Stats.high_fall_velocity:
 		high_fall = true
+
+	if parent.velocity.y > %Stats.max_fall_velocity:
+		death = true
 
 	if movement != 0:
 		flip_animations(movement < 0)
@@ -49,6 +56,8 @@ func process_physics(delta: float) -> State:
 		if %WallBodyCheck.is_colliding() and !%FloorCheck.is_colliding() and !%TopCheck.is_colliding() and !%AgainstWallCheck.is_colliding():
 				return ledge_grab_state
 		else:
+			if death:
+				return death_state
 			if high_fall:
 				return landing_state
 			if direction().x != 0:
