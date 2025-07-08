@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://dd4oe0jxpurig"]
+
+[ext_resource type="Texture2D" uid="uid://bk4w41xkqfxxe" path="res://assets/sprites/ui/Grid/Black/GridSlotC.png" id="1_dxvxp"]
+
+[node name="InventorySlot" type="Panel"]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(16, 16)
+offset_right = 16.0
+offset_bottom = 16.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_dxvxp")
+centered = false
