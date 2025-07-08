@@ -13,7 +13,6 @@ config_version=5
 config/name="platformer_prototype"
 run/main_scene="uid://bk2363y843fiq"
 config/features=PackedStringArray("4.4", "GL Compatibility")
-config/icon="res://icon.svg"
 
 [display]
 
