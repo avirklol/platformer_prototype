@@ -1,14 +1,47 @@
-[gd_scene load_steps=2 format=3 uid="uid://dd4oe0jxpurig"]
+[gd_scene load_steps=5 format=3 uid="uid://dd4oe0jxpurig"]
 
-[ext_resource type="Texture2D" uid="uid://bk4w41xkqfxxe" path="res://assets/sprites/ui/Grid/Black/GridSlotC.png" id="1_dxvxp"]
+[ext_resource type="Script" uid="uid://bhpni8ts1bo1w" path="res://inventory/inventory_slot.gd" id="1_nsnbm"]
+[ext_resource type="Texture2D" uid="uid://ch3kap0ad4ewb" path="res://assets/used/ui/Grid/Black/GridSlotC.png" id="2_22dgf"]
+[ext_resource type="SystemFont" uid="uid://lfwcbhk2fuxr" path="res://assets/fonts/stack_count.tres" id="3_22dgf"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_gjky6"]
+line_spacing = 0.0
+font = ExtResource("3_22dgf")
+font_size = 6
 
 [node name="InventorySlot" type="Panel"]
 self_modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(16, 16)
 offset_right = 16.0
 offset_bottom = 16.0
+script = ExtResource("1_nsnbm")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="SlotBackground" type="Sprite2D" parent="."]
+unique_name_in_owner = true
 texture_filter = 1
-texture = ExtResource("1_dxvxp")
+texture = ExtResource("2_22dgf")
 centered = false
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 0
+offset_right = 16.0
+offset_bottom = 16.0
+
+[node name="Panel" type="Panel" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="ItemImage" type="Sprite2D" parent="CenterContainer/Panel"]
+unique_name_in_owner = true
+
+[node name="StackCount" type="Label" parent="."]
+unique_name_in_owner = true
+texture_filter = 1
+layout_mode = 0
+offset_left = 2.0
+offset_top = 8.0
+offset_right = 14.0
+offset_bottom = 14.1
+theme_override_fonts/font = ExtResource("3_22dgf")
+label_settings = SubResource("LabelSettings_gjky6")
+horizontal_alignment = 2
+vertical_alignment = 2
