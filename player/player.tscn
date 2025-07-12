@@ -1,4 +1,4 @@
-[gd_scene load_steps=205 format=3 uid="uid://dng8w80c7lkie"]
+[gd_scene load_steps=206 format=3 uid="uid://dng8w80c7lkie"]
 
 [ext_resource type="Texture2D" uid="uid://b55jtbyibw7j8" path="res://assets/sprites/player/PlayerSheet.png" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://cdmsmcyf2ofct" path="res://player/player.gd" id="1_g2els"]
@@ -178,6 +178,7 @@
 [ext_resource type="Script" uid="uid://cpgoqphpwx5fd" path="res://player/states/movement/wall_slide.gd" id="98_2a33p"]
 [ext_resource type="Script" uid="uid://co1r7xdv6bs1h" path="res://player/states/movement/wall_jump.gd" id="123_kg5hq"]
 [ext_resource type="Script" uid="uid://bbaeio857kk34" path="res://player/states/movement/ladder_climb.gd" id="148_i18u8"]
+[ext_resource type="PackedScene" uid="uid://1h4dmm2ibva2" path="res://inventory/inventory.tscn" id="162_lv6rk"]
 [ext_resource type="Script" uid="uid://cmr65k4xdsj4b" path="res://player/states/movement/ladder_top_out.gd" id="169_4em36"]
 [ext_resource type="Script" uid="uid://bmqwdelr81nnp" path="res://player/states/movement/sliding.gd" id="169_drj81"]
 [ext_resource type="Script" uid="uid://dmnl05egf0nir" path="res://player/states/movement/ladder_down_climb.gd" id="169_yc32c"]
@@ -1273,3 +1274,9 @@ theme_override_fonts/font = SubResource("SystemFont_holxr")
 theme_override_font_sizes/font_size = 8
 text = "ON FLOOR: FALSE"
 horizontal_alignment = 2
+
+[node name="Inventory" parent="." instance=ExtResource("162_lv6rk")]
+offset_left = 26.0
+offset_top = -100.0
+offset_right = 75.0
+offset_bottom = -54.0
