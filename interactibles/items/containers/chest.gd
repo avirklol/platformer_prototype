@@ -21,9 +21,10 @@ func _ready() -> void:
 	# endless_timer.timeout.connect(_on_timeout)
 
 
-func _on_timeout() -> void:
-	spawn_loot()
+# func _on_timeout() -> void:
+	# spawn_loot()
 	# endless_timer.start()
+
 
 func _on_animation_finished() -> void:
 	if animations.name == "open" or animations.name == "open_empty":
