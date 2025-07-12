@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://dq728djkhordr"]
+
+[ext_resource type="Script" uid="uid://kw03p0asf5il" path="res://interactibles/items/pickups/item_pick_up.gd" id="1_sxa7y"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d3dk2"]
+size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sxa7y"]
+size = Vector2(17, 17)
+
+[node name="ItemPickUp" type="RigidBody2D"]
+collision_layer = 524288
+mass = 0.001
+script = ExtResource("1_sxa7y")
+
+[node name="RigidCollisionShape" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
+shape = SubResource("RectangleShape2D_d3dk2")
+
+[node name="ItemAnimation" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+
+[node name="PickUpArea" type="Area2D" parent="."]
+unique_name_in_owner = true
+collision_mask = 2
+
+[node name="AreaCollisionShape" type="CollisionShape2D" parent="PickUpArea"]
+unique_name_in_owner = true
+shape = SubResource("RectangleShape2D_sxa7y")
