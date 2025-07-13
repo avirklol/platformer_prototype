@@ -14,6 +14,10 @@ config/name="platformer_prototype"
 run/main_scene="uid://bk2363y843fiq"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 
+[audio]
+
+buses/default_bus_layout="res://sound/bus_config.tres"
+
 [autoload]
 
 item_database="*res://interactibles/items/classes/item_db.gd"
