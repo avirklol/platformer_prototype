@@ -1,4 +1,4 @@
-[gd_scene load_steps=206 format=3 uid="uid://dng8w80c7lkie"]
+[gd_scene load_steps=205 format=3 uid="uid://dng8w80c7lkie"]
 
 [ext_resource type="Texture2D" uid="uid://b55jtbyibw7j8" path="res://assets/sprites/player/PlayerSheet.png" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://cdmsmcyf2ofct" path="res://player/player.gd" id="1_g2els"]
@@ -900,11 +900,6 @@ size = Vector2(20, 14)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jx8is"]
 size = Vector2(20, 14)
 
-[sub_resource type="SystemFont" id="SystemFont_holxr"]
-generate_mipmaps = true
-subpixel_positioning = 0
-keep_rounding_remainders = false
-
 [node name="Player" type="CharacterBody2D"]
 texture_filter = 1
 material = SubResource("CanvasItemMaterial_lxlsd")
@@ -1234,51 +1229,16 @@ script = ExtResource("85_vx63k")
 [node name="Stats" parent="." instance=ExtResource("183_ep0wi")]
 unique_name_in_owner = true
 
-[node name="Debug" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_left = -20.0
-offset_top = -94.0
-offset_right = 20.0
-offset_bottom = -54.0
-
-[node name="StateDebug" type="Label" parent="Debug"]
-unique_name_in_owner = true
-visible = false
-texture_filter = 1
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = -9.0
-offset_right = 61.0
-offset_bottom = 9.0
-grow_vertical = 2
-theme_override_fonts/font = SubResource("SystemFont_holxr")
-theme_override_font_sizes/font_size = 10
-text = "LEDGE GRAB"
-horizontal_alignment = 2
-vertical_alignment = 1
-text_overrun_behavior = 4
-
-[node name="OnFloorDebug" type="Label" parent="Debug"]
-unique_name_in_owner = true
-visible = false
-texture_filter = 1
-layout_mode = 0
-offset_left = -80.0
-offset_top = -61.0
-offset_right = -11.0
-offset_bottom = -38.0
-theme_override_fonts/font = SubResource("SystemFont_holxr")
-theme_override_font_sizes/font_size = 8
-text = "ON FLOOR: FALSE"
-horizontal_alignment = 2
-
 [node name="Inventory" parent="." instance=ExtResource("162_lv6rk")]
 offset_left = 26.0
 offset_top = -100.0
 offset_right = 75.0
 offset_bottom = -54.0
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+[node name="Audio" type="Node" parent="."]
+
+[node name="PlayerBodyAudio" type="AudioStreamPlayer2D" parent="Audio"]
+unique_name_in_owner = true
+
+[node name="PlayerVoiceAudio" type="AudioStreamPlayer2D" parent="Audio"]
+unique_name_in_owner = true
