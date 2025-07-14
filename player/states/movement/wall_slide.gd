@@ -17,7 +17,7 @@ func exit() -> void:
 
 
 func process_physics(delta: float) -> State:
-	var movement = direction().x * %Stats.force.walk
+	var movement = direction().x * stats.force.walk
 	parent.velocity.x = movement
 	parent.velocity.y += gravity * delta
 	parent.velocity.y *= 0.86

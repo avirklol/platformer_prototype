@@ -6,12 +6,15 @@ extends CharacterBody2D
 @onready var state_machine: Node = $StateMachine
 @onready var input_handler: Node = $InputHandler
 @onready var inventory: Inventory = $Inventory
+@onready var stats: PlayerStats = $Stats
+@onready var body_audio: AudioStreamPlayer2D = %PlayerBodyAudio
+@onready var voice_audio: AudioStreamPlayer2D = %PlayerVoiceAudio
 
 var current_ladder: Area2D = null
 
 
 func _ready() -> void:
-	state_machine.init(self, animations, effects, input_handler)
+	state_machine.init(self, animations, effects, input_handler, body_audio, voice_audio, stats)
 	add_to_group("characters")
 
 

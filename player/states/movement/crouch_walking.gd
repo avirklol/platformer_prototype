@@ -33,7 +33,7 @@ func process_input(event: InputEvent) -> State:
 
 
 func process_physics(delta: float) -> State:
-	var movement = direction().x * %Stats.force.crouch
+	var movement = direction().x * stats.force.crouch
 	if movement != 0:
 		flip_animations(movement < 0)
 		flip_collision_shapes(movement < 0)

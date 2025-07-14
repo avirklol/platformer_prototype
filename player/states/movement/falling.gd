@@ -30,16 +30,16 @@ func exit() -> void:
 		%LedgeGrab.disabled = true
 
 func process_physics(delta: float) -> State:
-	var movement = direction().x * %Stats.force.walk
+	var movement = direction().x * stats.force.walk
 
 	parent.velocity.y += gravity * delta
 	parent.velocity.x = movement
 	print(parent.velocity.y)
 
-	if parent.velocity.y > %Stats.high_fall_velocity:
+	if parent.velocity.y > stats.high_fall_velocity:
 		high_fall = true
 
-	if parent.velocity.y > %Stats.max_fall_velocity:
+	if parent.velocity.y > stats.max_fall_velocity:
 		death = true
 
 	if movement != 0:

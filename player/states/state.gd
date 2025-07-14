@@ -10,6 +10,9 @@ var animations: AnimatedSprite2D
 var effects: AnimatedSprite2D
 var input_handler: Node
 var parent: CharacterBody2D
+var body_audio: AudioStreamPlayer2D
+var voice_audio: AudioStreamPlayer2D
+var stats: PlayerStats
 
 
 func _on_animation_finished() -> void:

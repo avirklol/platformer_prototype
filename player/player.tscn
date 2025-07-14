@@ -1092,6 +1092,7 @@ falling_state = NodePath("../Falling")
 ladder_climb_state = NodePath("../LadderClimb")
 ladder_climb_down_state = NodePath("../LadderDownClimb")
 animation_name = "walking"
+effect_name = null
 
 [node name="Running" type="Node" parent="StateMachine" node_paths=PackedStringArray("walking_state", "standing_state", "jumping_state", "falling_state", "crouching_state", "stop_running_state")]
 script = ExtResource("85_lw0jh")
@@ -1102,6 +1103,7 @@ falling_state = NodePath("../Falling")
 crouching_state = NodePath("../Crouching")
 stop_running_state = NodePath("../StopRunning")
 animation_name = "running"
+effect_name = null
 
 [node name="Crouching" type="Node" parent="StateMachine" node_paths=PackedStringArray("standing_state", "crouch_walking_state", "jumping_state", "falling_state", "ladder_climb_state", "ladder_climb_down_state")]
 script = ExtResource("86_ry8ed")
@@ -1122,6 +1124,7 @@ falling_state = NodePath("../Falling")
 ladder_climb_state = NodePath("../LadderClimb")
 ladder_climb_down_state = NodePath("../LadderDownClimb")
 animation_name = "crouch_walking"
+effect_name = null
 
 [node name="Jumping" type="Node" parent="StateMachine" node_paths=PackedStringArray("falling_state", "ledge_grab_state", "standing_state", "ladder_climb_state")]
 script = ExtResource("87_au8ao")
@@ -1130,6 +1133,7 @@ ledge_grab_state = NodePath("../LedgeGrab")
 standing_state = NodePath("../Standing")
 ladder_climb_state = NodePath("../LadderClimb")
 animation_name = "jump_0"
+effect_name = null
 
 [node name="Falling" type="Node" parent="StateMachine" node_paths=PackedStringArray("standing_state", "walking_state", "running_state", "crouching_state", "ledge_grab_state", "landing_state", "wall_slide_state", "ladder_climb_state", "death_state")]
 script = ExtResource("88_w5j5w")
@@ -1143,6 +1147,7 @@ wall_slide_state = NodePath("../WallSlide")
 ladder_climb_state = NodePath("../LadderClimb")
 death_state = NodePath("../Death")
 animation_name = "jump_2"
+effect_name = null
 
 [node name="Landing" type="Node" parent="StateMachine" node_paths=PackedStringArray("standing_state", "walking_state", "running_state", "crouching_state", "crouch_walking_state", "jumping_state", "falling_state")]
 script = ExtResource("90_ljgr3")
@@ -1189,12 +1194,14 @@ falling_state = NodePath("../Falling")
 wall_jump_state = NodePath("../WallJump")
 standing_state = NodePath("../Standing")
 animation_name = "wall_sliding"
+effect_name = null
 
 [node name="WallJump" type="Node" parent="StateMachine" node_paths=PackedStringArray("falling_state", "wall_slide_state")]
 script = ExtResource("123_kg5hq")
 falling_state = NodePath("../Falling")
 wall_slide_state = NodePath("../WallSlide")
 animation_name = "wall_jumping"
+effect_name = null
 
 [node name="LadderClimb" type="Node" parent="StateMachine" node_paths=PackedStringArray("falling_state", "standing_state", "ladder_top_state", "jumping_state")]
 script = ExtResource("148_i18u8")
@@ -1203,6 +1210,7 @@ standing_state = NodePath("../Standing")
 ladder_top_state = NodePath("../LadderTopOut")
 jumping_state = NodePath("../Jumping")
 animation_name = "ladder_climbing"
+effect_name = null
 
 [node name="LadderDownClimb" type="Node" parent="StateMachine" node_paths=PackedStringArray("ladder_climb_state")]
 script = ExtResource("169_yc32c")
