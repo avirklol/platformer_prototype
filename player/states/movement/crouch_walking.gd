@@ -7,6 +7,8 @@ extends State
 @export var ladder_climb_state: State
 @export var ladder_climb_down_state: State
 
+@onready var crouch_walking_audio: Array = sound_database.db['states']['walking']['metal']
+
 
 func enter() -> void:
 	super()
@@ -14,6 +16,7 @@ func enter() -> void:
 
 
 func exit() -> void:
+	super()
 	if %StateMachine.next_state == crouching_state or %StateMachine.next_state == null:
 		enable_crouch_collision(true)
 	else:
@@ -34,7 +37,14 @@ func process_input(event: InputEvent) -> State:
 
 func process_physics(delta: float) -> State:
 	var movement = direction().x * stats.force.crouch
-	if movement != 0:
+
+	if movement:
+		if !body_audio.playing:
+			body_audio.volume_db = -23
+			body_audio.pitch_scale = 1.4
+			body_audio.stream = crouch_walking_audio.pick_random()
+			body_audio.play()
+
 		flip_animations(movement < 0)
 		flip_collision_shapes(movement < 0)
 

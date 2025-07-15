@@ -26,6 +26,7 @@ func enter() -> void:
 
 
 func exit() -> void:
+	super()
 	if %StateMachine.next_state != ledge_grab_state:
 		%LedgeGrab.disabled = true
 
@@ -34,7 +35,6 @@ func process_physics(delta: float) -> State:
 
 	parent.velocity.y += gravity * delta
 	parent.velocity.x = movement
-	print(parent.velocity.y)
 
 	if parent.velocity.y > stats.high_fall_velocity:
 		high_fall = true

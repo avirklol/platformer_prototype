@@ -8,6 +8,8 @@ extends State
 @export var stop_running_state: State
 # @export var sliding_state: State
 
+@onready var running_audio: Array = sound_database.db['states']['running']['metal']
+
 var run_direction_history: float = 0.0
 
 
@@ -17,6 +19,7 @@ func enter() -> void:
 
 
 func exit() -> void:
+	super()
 	enable_running_collision(false)
 	flip_animations(run_direction_history < 0)
 	flip_collision_shapes(run_direction_history < 0)
@@ -37,6 +40,13 @@ func process_input(event: InputEvent) -> State:
 
 func process_physics(delta: float) -> State:
 	var movement = 0
+
+	if direction().x != 0:
+		if !body_audio.playing:
+			body_audio.volume_db = -6.0
+			body_audio.pitch_scale = 1
+			body_audio.stream = running_audio.pick_random()
+			body_audio.play()
 
 	if direction().x > 0:
 		movement = 1 * stats.force.run

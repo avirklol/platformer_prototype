@@ -6,13 +6,26 @@ extends State
 @export var ladder_climb_state: State
 
 # var initial_velocity: Vector2 = Vector2.ZERO #TODO: Implement velocity carryover from grounded movement.
+@onready var jumping_audio: Array = sound_database.db['states']['jumping']['metal']
+@onready var character_audio: Array = sound_database.db['voice']['jumping']
 
 
 func enter() -> void:
 	super()
 	parent.velocity.y = -stats.force.jump
+	if !voice_audio.playing and randi() % 3 == 0:
+		voice_audio.stream = character_audio.pick_random()
+		voice_audio.play()
+	if !body_audio.playing:
+		body_audio.volume_db = 2.0
+		body_audio.pitch_scale = 1.0
+		body_audio.stream = jumping_audio.pick_random()
+		body_audio.play()
 	# initial_velocity = parent.velocity #TODO: Implement velocity carryover from grounded movement.
 
+
+func exit() -> void:
+	super()
 
 func process_physics(delta: float) -> State:
 	var movement = direction().x * stats.force.walk

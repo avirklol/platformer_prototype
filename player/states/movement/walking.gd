@@ -9,8 +9,14 @@ extends State
 @export var ladder_climb_state: State
 @export var ladder_climb_down_state: State
 
+@onready var walking_audio: Array = sound_database.db['states']['walking']['metal']
+
 
 func enter() -> void:
+	super()
+
+
+func exit() -> void:
 	super()
 
 
@@ -29,6 +35,13 @@ func process_input(event: InputEvent) -> State:
 
 func process_physics(delta: float) -> State:
 	var movement = direction().x * stats.force.walk
+
+	if movement:
+		if !body_audio.playing:
+			body_audio.volume_db = -10.0
+			body_audio.pitch_scale = 1.2
+			body_audio.stream = walking_audio.pick_random()
+			body_audio.play()
 
 	if direction().x > 0:
 		movement = 1 * stats.force.walk

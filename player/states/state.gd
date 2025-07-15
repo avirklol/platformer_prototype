@@ -29,7 +29,8 @@ func enter() -> void:
 
 
 func exit() -> void:
-	pass
+	body_audio.stop()
+	voice_audio.stop()
 
 
 func process_input(event: InputEvent) -> State:

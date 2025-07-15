@@ -3,7 +3,15 @@ extends State
 @export var standing_state: State
 @export var walking_state: State
 
+@onready var character_audio: Array = sound_database.db['voice']['effort']
+
 func enter() -> void:
+	super()
+	if !voice_audio.playing:
+		voice_audio.stream = character_audio.pick_random()
+		voice_audio.play()
+
+func exit() -> void:
 	super()
 
 

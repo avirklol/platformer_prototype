@@ -8,10 +8,26 @@ extends State
 @export var jumping_state: State
 @export var falling_state: State
 
+@onready var landing_audio: Array = sound_database.db['states']['landing']['metal']
+@onready var character_audio: Array = sound_database.db['voice']['landing']
+
 
 func enter() -> void:
 	super()
 	parent.velocity = Vector2.ZERO
+	if !voice_audio.playing:
+		voice_audio.stream = character_audio.pick_random()
+		voice_audio.play()
+	if !body_audio.playing:
+		body_audio.volume_db = -10.0
+		body_audio.pitch_scale = 1.0
+		body_audio.stream = landing_audio.pick_random()
+		print('Playing landing audio!')
+		print(landing_audio)
+		body_audio.play()
+
+func exit() -> void:
+	super()
 
 
 func _on_animation_finished() -> void:
