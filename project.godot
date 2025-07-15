@@ -20,7 +20,8 @@ buses/default_bus_layout="res://sound/bus_config.tres"
 
 [autoload]
 
-item_database="*res://interactibles/items/classes/item_db.gd"
+item_database="*res://interactibles/items/db/item_db.gd"
+sound_database="*res://sound/db/sound_db.gd"
 
 [display]
 

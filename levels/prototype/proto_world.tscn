@@ -554,7 +554,7 @@ autoplay = "side_to_side"
 
 [node name="CharacterBody2D" parent="." instance=ExtResource("3_xkavu")]
 z_index = 5
-position = Vector2(-180, 336)
+position = Vector2(209, 230)
 floor_stop_on_slope = false
 
 [node name="Map" type="Node" parent="."]
