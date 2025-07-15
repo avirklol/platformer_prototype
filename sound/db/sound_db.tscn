@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cjghrl86sn286"]
+
+[ext_resource type="Script" uid="uid://bejneplimqyr4" path="res://sound/db/sound_db.gd" id="1_3yj02"]
+
+[node name="Node" type="Node"]
+script = ExtResource("1_3yj02")
