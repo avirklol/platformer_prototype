@@ -1,7 +1,7 @@
 extends State
 
 # TODO: Needs a ton of refinement.
-
+@export_category("Exit States")
 @export var standing_state: State
 
 var deceleration: float = 0.0

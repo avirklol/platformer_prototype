@@ -1,5 +1,6 @@
 extends State
 
+@export_category("Exit States")
 @export var standing_state: State
 
 
@@ -36,7 +37,7 @@ func enable_ladder_collision(enable: bool) -> void:
 		ledge_grab.disabled = false
 		# Enabled ShapeCasts
 		wall_slide_check.enabled = true
-		head_check.enabled = true
-		wall_body_check.enabled = true
+		%HeadCheck.enabled = true
+		%WallBodyCheck.enabled = true
 		# Disabled CollisionShapes
-		ladder_collision.disabled = true
+		%LadderCollision.disabled = true

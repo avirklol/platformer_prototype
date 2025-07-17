@@ -1,5 +1,6 @@
 extends State
 
+@export_category("Exit States")
 @export var standing_state: State
 @export var crouch_walking_state: State
 @export var jumping_state: State

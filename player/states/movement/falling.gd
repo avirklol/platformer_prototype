@@ -19,7 +19,7 @@ var death: bool = false
 func enter() -> void:
 	super()
 
-	%Camera2D.position_smoothing_speed = 50.0
+	camera.position_smoothing_speed = 50.0
 
 	high_fall = false
 	death = false

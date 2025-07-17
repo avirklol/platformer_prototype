@@ -1,5 +1,6 @@
 extends State
 
+@export_category("Exit States")
 @export var hanging_state: State
 
 

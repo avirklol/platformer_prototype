@@ -1,5 +1,6 @@
 extends State
 
+@export_category("Exit States")
 @export var falling_state: State
 @export var standing_state: State
 @export var ladder_top_state: State
