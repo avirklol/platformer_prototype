@@ -1,13 +1,14 @@
 extends Area2D
 
-@onready var animations: AnimatedSprite2D = %AnimatedSprite2D
-# @onready var endless_timer: Timer = %EndlessTimer
-@onready var item_pickup: PackedScene = preload("res://interactibles/items/pickups/item_pick_up.tscn")
-
 @export var item_type: String
 @export var item_name: String
 @export var item_rarity: int
 @export var loot_amount: int = 1
+
+@onready var animations: AnimatedSprite2D = %AnimatedSprite2D
+# @onready var endless_timer: Timer = %EndlessTimer
+@onready var item_pickup: PackedScene = preload("res://interactibles/items/pickups/item_pick_up.tscn")
+
 
 var player_in_range: bool = false
 var opened: bool = false
