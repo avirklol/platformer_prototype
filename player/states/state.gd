@@ -81,6 +81,8 @@ extends Node
 @onready var crouch_wall_body_check: ShapeCast2D = %CrouchWallBodyCheck
 # Timers
 @onready var ladder_release: Timer = %LadderRelease
+# Camera
+@onready var camera: Camera2D = %Camera2D
 
 var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
 
