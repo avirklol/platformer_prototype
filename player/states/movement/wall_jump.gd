@@ -5,8 +5,10 @@ extends State
 
 func enter() -> void:
 	super()
+
 	parent.velocity.y = -stats.force.jump * 1.5
-	if %WallBodyCheck.get_collision_normal(0)[0] < 0:
+
+	if wall_body_check.get_collision_normal(0)[0] < 0:
 		parent.velocity.x = -stats.force.jump / 2
 		flip_animations(true)
 		flip_collision_shapes(true)
@@ -19,11 +21,13 @@ func enter() -> void:
 func _on_animation_finished() -> void:
 	if animations.animation == animation_name:
 		var movement = direction().x * stats.force.walk
+
 		parent.velocity.x = movement
-		if !pushing_wall(%WallSlideCheck, direction().x):
-			%StateMachine.change_state(falling_state)
+
+		if !pushing_wall(wall_slide_check, direction().x):
+			state_machine.change_state(falling_state)
 		else:
-			%StateMachine.change_state(wall_slide_state)
+			state_machine.change_state(wall_slide_state)
 
 
 func process_physics(delta: float) -> State:

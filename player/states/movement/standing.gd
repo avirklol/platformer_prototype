@@ -10,11 +10,12 @@ extends State
 
 func enter() -> void:
 	super()
+
 	parent.velocity = Vector2.ZERO
 
 
 func process_input(event: InputEvent) -> State:
-	if direction().x != 0 and (!pushing_wall(%HeadCheck, direction().x) and !pushing_wall(%WallBodyCheck, direction().x)):
+	if direction().x != 0 and (!pushing_wall(head_check, direction().x) and !pushing_wall(wall_body_check, direction().x)):
 		if running():
 			return running_state
 		return walking_state
@@ -22,15 +23,15 @@ func process_input(event: InputEvent) -> State:
 	if crouch_toggle():
 		return crouching_state
 
-	if jumping() and !%JumpCheck.is_colliding():
+	if jumping() and !jump_check.is_colliding():
 		return jumping_state
 
 	if parent.current_ladder:
-		if %LadderTopCheck.is_colliding():
+		if ladder_top_check.is_colliding():
 			if direction().y < 0:
 				return ladder_climb_state
 
-		if %LadderBottomCheck.is_colliding() and !%LadderTopCheck.is_colliding():
+		if ladder_bottom_check.is_colliding() and !ladder_top_check.is_colliding():
 			if direction().y > 0:
 				return ladder_climb_down_state
 

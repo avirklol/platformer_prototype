@@ -14,7 +14,7 @@ func enter() -> void:
 
 
 func exit() -> void:
-	if %StateMachine.next_state != ladder_top_state:
+	if state_machine.next_state != ladder_top_state:
 		if in_collision:
 			enable_ladder_collision(false)
 			disable_main_collision(true)
@@ -39,7 +39,7 @@ func process_input(event: InputEvent) -> State:
 	if jumping():
 		disable_ladder_shapes(true)
 
-		if %JumpCheck.is_colliding():
+		if jump_check.is_colliding():
 			in_collision = true
 			return falling_state
 		else:
@@ -71,11 +71,11 @@ func process_physics(delta: float) -> State:
 	if parent.is_on_floor():
 			return standing_state
 
-	if !parent.current_ladder and !%FloorCheck.is_colliding():
+	if !parent.current_ladder and !floor_check.is_colliding():
 		return falling_state
 
-	if %LadderTopCheck.is_colliding() and direction().y < 0:
-		if %LadderTopCheck.get_collision_normal(0)[1] < 0:
+	if ladder_top_check.is_colliding() and direction().y < 0:
+		if ladder_top_check.get_collision_normal(0)[1] < 0:
 			return ladder_top_state
 
 	return null
@@ -84,24 +84,24 @@ func process_physics(delta: float) -> State:
 func enable_ladder_collision(enable: bool) -> void:
 	if enable:
 		# Disabled CollisionShapes
-		%MainCollision.disabled = true
-		%LedgeGrab.disabled = true
+		main_collision.disabled = true
+		ledge_grab.disabled = true
 		# Disabled ShapeCasts
-		%WallSlideCheck.enabled = false
-		%HeadCheck.enabled = false
-		%WallBodyCheck.enabled = false
+		wall_slide_check.enabled = false
+		head_check.enabled = false
+		wall_body_check.enabled = false
 		# Enabled CollisionShapes
-		%LadderCollision.disabled = false
+		ladder_collision.disabled = false
 	else:
 		# Enabled CollisionShapes
-		%MainCollision.disabled = false
-		%LedgeGrab.disabled = false
+		main_collision.disabled = false
+		ledge_grab.disabled = false
 		# Enabled ShapeCasts
-		%WallSlideCheck.enabled = true
-		%HeadCheck.enabled = true
-		%WallBodyCheck.enabled = true
+		wall_slide_check.enabled = true
+		head_check.enabled = true
+		wall_body_check.enabled = true
 		# Disabled CollisionShapes
-		%LadderCollision.disabled = true
+		ladder_collision.disabled = true
 
 
 func center_player() -> void:

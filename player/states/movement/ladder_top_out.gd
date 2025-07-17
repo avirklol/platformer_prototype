@@ -5,6 +5,7 @@ extends State
 
 func enter() -> void:
 	super()
+
 	parent.velocity = Vector2.ZERO
 
 
@@ -15,27 +16,27 @@ func exit() -> void:
 func _on_animation_finished() -> void:
 	if animations.animation == animation_name:
 		parent.position.y -= 40
-		%StateMachine.change_state(standing_state)
+		state_machine.change_state(standing_state)
 
 
 func enable_ladder_collision(enable: bool) -> void:
 	if enable:
 		# Disabled CollisionShapes
-		%MainCollision.disabled = true
-		%LedgeGrab.disabled = true
+		main_collision.disabled = true
+		ledge_grab.disabled = true
 		# Disabled ShapeCasts
-		%WallSlideCheck.enabled = false
-		%HeadCheck.enabled = false
-		%WallBodyCheck.enabled = false
+		wall_slide_check.enabled = false
+		head_check.enabled = false
+		wall_body_check.enabled = false
 		# Enabled CollisionShapes
-		%LadderCollision.disabled = false
+		ladder_collision.disabled = false
 	else:
 		# Enabled CollisionShapes
-		%MainCollision.disabled = false
-		%LedgeGrab.disabled = false
+		main_collision.disabled = false
+		ledge_grab.disabled = false
 		# Enabled ShapeCasts
-		%WallSlideCheck.enabled = true
-		%HeadCheck.enabled = true
-		%WallBodyCheck.enabled = true
+		wall_slide_check.enabled = true
+		head_check.enabled = true
+		wall_body_check.enabled = true
 		# Disabled CollisionShapes
-		%LadderCollision.disabled = true
+		ladder_collision.disabled = true

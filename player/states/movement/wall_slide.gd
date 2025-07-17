@@ -24,12 +24,12 @@ func process_physics(delta: float) -> State:
 
 	parent.move_and_slide()
 
-	if !pushing_wall(%WallBodyCheck, direction().x):
+	if !pushing_wall(wall_body_check, direction().x):
 		return falling_state
 	else:
 		if jumping():
 			return wall_jump_state
-		elif %FloorCheck.is_colliding():
+		elif floor_check.is_colliding():
 			return standing_state
 
 	return null
@@ -38,17 +38,17 @@ func process_physics(delta: float) -> State:
 func enable_wall_slide_collision(enable: bool) -> void:
 	if enable:
 		# Disabled CollisionShapes
-		%MainCollision.disabled = true
-		%LedgeGrab.disabled = true
+		main_collision.disabled = true
+		ledge_grab.disabled = true
 		# Disabled ShapeCasts
-		%HeadCheck.enabled = false
+		head_check.enabled = false
 		# Enabled CollisionShapes
-		%WallSlideCollision.disabled = false
+		wall_slide_collision.disabled = false
 
 	else:
 		# Enabled CollisionShapes
-		%MainCollision.disabled = false
+		main_collision.disabled = false
 		# Enabled ShapeCasts
-		%HeadCheck.enabled = true
+		head_check.enabled = true
 		# Disabled CollisionShapes
-		%WallSlideCollision.disabled = true
+		wall_slide_collision.disabled = true

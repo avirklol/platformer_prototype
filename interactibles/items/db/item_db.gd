@@ -19,15 +19,19 @@ var item_db: Dictionary = {}
 func _ready() -> void:
     var item_folder_path = "res://interactibles/items/"
     var dir = DirAccess.open(item_folder_path)
+
     if dir:
         dir.list_dir_begin()
         var file_name = dir.get_next()
+
         while file_name != "":
             if file_name.ends_with(".tres"):
                 var item_path = item_folder_path + file_name
                 var item_resource = load(item_path)
+
                 if item_resource is ItemData:
                     var item_type_name = item_type_names[item_resource.type]
+
                     if not item_db.has(item_type_name):
                         item_db[item_type_name] = {}
                     item_db[item_type_name][item_resource.name] = item_resource
@@ -64,6 +68,7 @@ func get_item(item_type: String = "", item_name: String = "", item_rarity: int =
             return items_with_rarity.pick_random()
     else:
         var random_type: String = item_db.keys().pick_random()
+
         return item_db[random_type].values().pick_random()
 
     return null

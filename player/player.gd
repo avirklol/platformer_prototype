@@ -7,10 +7,15 @@ extends CharacterBody2D
 @onready var input_handler: Node = $InputHandler
 @onready var inventory: Inventory = $Inventory
 @onready var stats: PlayerStats = $Stats
+@onready var floor_check: ShapeCast2D = %FloorCheck
+@onready var ledge_grab: CollisionShape2D = %LedgeGrab
 @onready var body_audio: AudioStreamPlayer2D = %PlayerBodyAudio
 @onready var voice_audio: AudioStreamPlayer2D = %PlayerVoiceAudio
 
+@onready var grass_tile_map: TileMapLayer = %Grass
+
 var current_ladder: Area2D = null
+var is_on: String = ""
 
 
 func _ready() -> void:
@@ -23,13 +28,25 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if floor_check.is_colliding():
+		var cell_position: Vector2i = grass_tile_map.get_coords_for_body_rid(floor_check.get_collider_rid(0))
+		var cell_data: TileData = grass_tile_map.get_cell_tile_data(cell_position)
+
+		if cell_data:
+			is_on = cell_data.get_custom_data("type")
+		else:
+			print("No cell data")
+			# print("No cell data on " + str(cell_position) + " --- " + str(floor_check.get_collider_rid(0)))
+
 	state_machine.process_physics(delta)
+	# print(position)
+	# print(cell_position)
 
 
 func _process(delta: float) -> void:
 	state_machine.process_frame(delta)
 	if state_machine.current_state.name != "Falling":
-		%LedgeGrab.disabled = true
+		ledge_grab.disabled = true
 
 # Ugly Debug Prints
 

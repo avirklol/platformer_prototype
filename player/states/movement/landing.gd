@@ -1,5 +1,6 @@
 extends State
-# TODO: Verify if all these states are required.
+
+@export_category("Exit States")
 @export var standing_state: State
 @export var walking_state: State
 @export var running_state: State
@@ -8,23 +9,27 @@ extends State
 @export var jumping_state: State
 @export var falling_state: State
 
-@onready var landing_audio: Array = sound_database.db['states']['landing']['metal']
-@onready var character_audio: Array = sound_database.db['voice']['landing']
+@onready var b_audio: Dictionary = sound_database.db['states']['landing']
+@onready var v_audio: Array = sound_database.db['voice']['landing']
 
 
 func enter() -> void:
 	super()
+
 	parent.velocity = Vector2.ZERO
+
 	if !voice_audio.playing:
-		voice_audio.stream = character_audio.pick_random()
+		voice_audio.stream = v_audio.pick_random()
 		voice_audio.play()
+
 	if !body_audio.playing:
-		body_audio.volume_db = -10.0
-		body_audio.pitch_scale = 1.0
-		body_audio.stream = landing_audio.pick_random()
-		print('Playing landing audio!')
-		print(landing_audio)
-		body_audio.play()
+		if b_audio.has(parent.is_on):
+			body_audio.volume_db = surfaces.get(parent.is_on, surfaces.get("default")).get("volume_db", -10.0)
+			body_audio.pitch_scale = surfaces.get(parent.is_on, surfaces.get("default")).get("pitch_scale", 1.0)
+			body_audio.stream = b_audio[parent.is_on].pick_random()
+			body_audio.play()
+		else:
+			print('body_audio: FALSE')
 
 func exit() -> void:
 	super()
@@ -34,20 +39,20 @@ func _on_animation_finished() -> void:
 	if animations.animation == animation_name:
 		if direction().x == 0:
 			if crouch_toggle():
-				%StateMachine.change_state(crouching_state)
+				state_machine.change_state(crouching_state)
 			elif jumping():
-				%StateMachine.change_state(jumping_state)
+				state_machine.change_state(jumping_state)
 			else:
-				%StateMachine.change_state(standing_state)
+				state_machine.change_state(standing_state)
 		else:
 			if running():
-				%StateMachine.change_state(running_state)
+				state_machine.change_state(running_state)
 			elif crouch_toggle():
-				%StateMachine.change_state(crouch_walking_state)
+				state_machine.change_state(crouch_walking_state)
 			elif jumping():
-				%StateMachine.change_state(jumping_state)
+				state_machine.change_state(jumping_state)
 			else:
-				%StateMachine.change_state(walking_state)
+				state_machine.change_state(walking_state)
 
 
 func process_physics(delta: float) -> State:

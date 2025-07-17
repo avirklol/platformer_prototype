@@ -8,6 +8,7 @@ var deceleration: float = 0.0
 
 func enter() -> void:
 	super()
+
 	deceleration = abs(parent.velocity.x) / 2
 
 func process_physics(delta: float) -> State:

@@ -7,7 +7,9 @@ func enter() -> void:
 		flip_animations(false)
 	else:
 		flip_animations(true)
+
 	super()
+
 	parent.velocity = Vector2.ZERO
 
 func _on_animation_finished() -> void:

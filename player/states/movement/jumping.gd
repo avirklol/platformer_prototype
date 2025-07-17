@@ -1,26 +1,34 @@
 extends State
 
+@export_category("Exit States")
 @export var falling_state: State
 @export var ledge_grab_state: State
 @export var standing_state: State
 @export var ladder_climb_state: State
 
 # var initial_velocity: Vector2 = Vector2.ZERO #TODO: Implement velocity carryover from grounded movement.
-@onready var jumping_audio: Array = sound_database.db['states']['jumping']['metal']
-@onready var character_audio: Array = sound_database.db['voice']['jumping']
+@onready var b_audio: Dictionary = sound_database.db['states']['jumping']
+@onready var v_audio: Array = sound_database.db['voice']['jumping']
 
 
 func enter() -> void:
 	super()
+
 	parent.velocity.y = -stats.force.jump
+
 	if !voice_audio.playing and randi() % 3 == 0:
-		voice_audio.stream = character_audio.pick_random()
+		voice_audio.stream = v_audio.pick_random()
 		voice_audio.play()
+
 	if !body_audio.playing:
-		body_audio.volume_db = 2.0
-		body_audio.pitch_scale = 1.0
-		body_audio.stream = jumping_audio.pick_random()
-		body_audio.play()
+		if b_audio.has(parent.is_on):
+			body_audio.volume_db = surfaces.get(parent.is_on, surfaces.get("default")).get("volume_db", 2.0)
+			body_audio.pitch_scale = surfaces.get(parent.is_on, surfaces.get("default")).get("pitch_scale", 1.0)
+			body_audio.stream = b_audio[parent.is_on].pick_random()
+			body_audio.play()
+		else:
+			print('body_audio: FALSE')
+
 	# initial_velocity = parent.velocity #TODO: Implement velocity carryover from grounded movement.
 
 
@@ -34,13 +42,14 @@ func process_physics(delta: float) -> State:
 		flip_animations(movement < 0)
 		flip_collision_shapes(movement < 0)
 
+		parent.velocity.x = movement
+
 	parent.velocity.y += gravity * delta
-	parent.velocity.x = movement
 
 	parent.move_and_slide()
 
 	if parent.current_ladder:
-		if %LadderBottomCheck.is_colliding() and %LadderTopCheck.is_colliding():
+		if ladder_bottom_check.is_colliding() and ladder_top_check.is_colliding():
 			if direction().y < 0:
 				return ladder_climb_state
 
@@ -49,8 +58,5 @@ func process_physics(delta: float) -> State:
 
 	if parent.is_on_floor():
 		return standing_state
-
-	if %WallBodyCheck.is_colliding() and !%FloorCheck.is_colliding() and !%TopCheck.is_colliding() and parent.is_on_floor():
-			return ledge_grab_state
 
 	return null

@@ -15,6 +15,7 @@ var deceleration: float = 0.0
 
 func enter() -> void:
 	super()
+
 	deceleration = abs(parent.velocity.x) / (animation_fps / animations.sprite_frames.get_frame_count(animation_name)) * 5
 
 
@@ -22,18 +23,18 @@ func _on_animation_finished() -> void:
 	if animations.animation == animation_name:
 		if direction().x == 0:
 			if crouch_toggle():
-				%StateMachine.change_state(crouching_state)
+				state_machine.change_state(crouching_state)
 			elif jumping():
-				%StateMachine.change_state(jumping_state)
+				state_machine.change_state(jumping_state)
 			else:
-				%StateMachine.change_state(standing_state)
+				state_machine.change_state(standing_state)
 		else:
-			if !pushing_wall(%HeadCheck, direction().x) and !pushing_wall(%WallBodyCheck, direction().x):
-				%StateMachine.change_state(walking_state)
+			if !pushing_wall(head_check, direction().x) and !pushing_wall(wall_body_check, direction().x):
+				state_machine.change_state(walking_state)
 			else:
 				if jumping():
-					%StateMachine.change_state(jumping_state)
-				%StateMachine.change_state(standing_state)
+					state_machine.change_state(jumping_state)
+				state_machine.change_state(standing_state)
 
 
 func process_physics(delta: float) -> State:
