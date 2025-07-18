@@ -1096,7 +1096,7 @@ surfaces = {
 "volume_db": 0.0
 },
 "dirt": {
-"pitch_scale": 1.2,
+"pitch_scale": 0.95,
 "volume_db": -10.0
 },
 "grass": {
@@ -1164,8 +1164,8 @@ surfaces = {
 "volume_db": -6.0
 },
 "grass": {
-"pitch_scale": 1.0,
-"volume_db": -6.0
+"pitch_scale": 1.1,
+"volume_db": -5.0
 },
 "gravel": {
 "pitch_scale": 1.0,
@@ -1436,8 +1436,6 @@ animation_name = "sliding"
 [node name="Death" type="Node" parent="StateMachine"]
 script = ExtResource("181_ep0wi")
 animation_name = "death"
-effect_name = null
-surfaces = null
 
 [node name="InputHandler" type="Node" parent="."]
 script = ExtResource("85_vx63k")
@@ -1446,6 +1444,7 @@ script = ExtResource("85_vx63k")
 unique_name_in_owner = true
 
 [node name="Inventory" parent="." instance=ExtResource("162_lv6rk")]
+visible = false
 offset_left = 26.0
 offset_top = -100.0
 offset_right = 75.0

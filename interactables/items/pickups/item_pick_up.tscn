@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://dq728djkhordr"]
 
-[ext_resource type="Script" uid="uid://kw03p0asf5il" path="res://interactibles/items/pickups/item_pick_up.gd" id="1_sxa7y"]
+[ext_resource type="Script" uid="uid://kw03p0asf5il" path="res://interactables/items/pickups/item_pick_up.gd" id="1_sxa7y"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d3dk2"]
 size = Vector2(16, 16)

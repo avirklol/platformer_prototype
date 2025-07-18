@@ -7,7 +7,7 @@ extends Area2D
 
 @onready var animations: AnimatedSprite2D = %AnimatedSprite2D
 # @onready var endless_timer: Timer = %EndlessTimer
-@onready var item_pickup: PackedScene = preload("res://interactibles/items/pickups/item_pick_up.tscn")
+@onready var item_pickup: PackedScene = preload("res://interactables/items/pickups/item_pick_up.tscn")
 
 
 var player_in_range: bool = false

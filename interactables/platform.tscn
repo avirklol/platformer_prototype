@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://bfsm1wneyo2ki"]
 
 [ext_resource type="Texture2D" uid="uid://ph4ivah3hwvg" path="res://assets/tilesets/platformer_prototype/AllAngles/BlueprintTilesetWarm.png" id="1_ba0x2"]
-[ext_resource type="Script" uid="uid://cp7p1rjsb4y4c" path="res://interactibles/platform.gd" id="1_n1ckp"]
+[ext_resource type="Script" uid="uid://cp7p1rjsb4y4c" path="res://interactables/platform.gd" id="1_n1ckp"]
 [ext_resource type="Texture2D" uid="uid://cujsu4xibjtp6" path="res://assets/sprites/things/PressurePlate/PressurePlateUnpressed.png" id="3_u7qrw"]
 [ext_resource type="Texture2D" uid="uid://c2uao0xusa5kb" path="res://assets/sprites/things/PressurePlate/PressurePlatePress.png" id="4_6f2a1"]
 
