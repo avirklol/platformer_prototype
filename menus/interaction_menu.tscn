@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://b53gkgdn0umru"]
+
+[ext_resource type="Texture2D" uid="uid://ud1itfrol4am" path="res://assets/used/ui/Panels/White/Card.png" id="1_d5qxy"]
+
+[node name="InteractionMenu" type="CanvasLayer"]
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+texture_filter = 1
+offset_right = 186.0
+offset_bottom = 100.0
+texture = ExtResource("1_d5qxy")
+patch_margin_left = 4
+patch_margin_top = 4
+patch_margin_right = 4
+patch_margin_bottom = 4
