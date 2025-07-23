@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="ItemData" load_steps=10 format=3 uid="uid://2wtjnuo2iav8"]
 
 [ext_resource type="Texture2D" uid="uid://wilhuvapjy5f" path="res://assets/used/Key/Key.png" id="1_2ey12"]
-[ext_resource type="Script" uid="uid://p3nxg8rjiv8v" path="res://interactables/items/classes/item.gd" id="2_u35hw"]
+[ext_resource type="Script" uid="uid://p3nxg8rjiv8v" path="res://interactables/items/item_class.gd" id="2_u35hw"]
 [ext_resource type="Texture2D" uid="uid://dth38kcu0j4vq" path="res://assets/used/Key/KeySpin.png" id="3_u35hw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q7nga"]

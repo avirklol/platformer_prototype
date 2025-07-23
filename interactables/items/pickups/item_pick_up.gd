@@ -9,7 +9,6 @@ extends RigidBody2D
 @onready var animations: AnimatedSprite2D = %ItemAnimation
 
 
-
 func _ready() -> void:
 	mass = item.weight
 	rigid_collision_shape.shape.size = collision_shape_size

@@ -17,7 +17,7 @@ var item_db: Dictionary = {}
 
 
 func _ready() -> void:
-    var item_folder_path = "res://interactibles/items/"
+    var item_folder_path = "res://interactables/items/"
     var dir = DirAccess.open(item_folder_path)
 
     if dir:
