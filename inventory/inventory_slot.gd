@@ -1,7 +1,7 @@
 extends Panel
 
-@onready var background: Sprite2D = %SlotBackground
-@onready var item_image: Sprite2D = %ItemImage
+@onready var background: TextureRect = %SlotBackground
+@onready var item_image: TextureRect = %ItemImage
 @onready var item_count: Label = %StackCount
 
 var active_slot: Texture2D = preload("res://assets/used/ui/Grid/Black/GridSlotC.png")

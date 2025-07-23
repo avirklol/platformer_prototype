@@ -1,15 +1,31 @@
-[gd_scene load_steps=2 format=3 uid="uid://b53gkgdn0umru"]
+[gd_scene load_steps=4 format=3 uid="uid://b53gkgdn0umru"]
 
 [ext_resource type="Texture2D" uid="uid://ud1itfrol4am" path="res://assets/used/ui/Panels/White/Card.png" id="1_d5qxy"]
+[ext_resource type="Script" uid="uid://byx15ndmd624u" path="res://menus/interaction_menu.gd" id="1_xw6kb"]
 
-[node name="InteractionMenu" type="CanvasLayer"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xw6kb"]
 
-[node name="NinePatchRect" type="NinePatchRect" parent="."]
+[node name="InteractionMenu" type="PanelContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_xw6kb")
+script = ExtResource("1_xw6kb")
+
+[node name="Background" type="NinePatchRect" parent="."]
+unique_name_in_owner = true
 texture_filter = 1
-offset_right = 186.0
-offset_bottom = 100.0
+layout_mode = 2
 texture = ExtResource("1_d5qxy")
+region_rect = Rect2(0, 1, 32, 48)
 patch_margin_left = 4
 patch_margin_top = 4
 patch_margin_right = 4
 patch_margin_bottom = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4

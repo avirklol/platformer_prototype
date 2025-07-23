@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dfu2p2o8g5f1p"]
+
+[node name="ItemInteractionContainer" type="VBoxContainer"]
+custom_minimum_size = Vector2(60, 25)
+offset_right = 60.0
+offset_bottom = 112.0

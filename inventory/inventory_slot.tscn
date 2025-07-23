@@ -16,11 +16,11 @@ offset_right = 16.0
 offset_bottom = 16.0
 script = ExtResource("1_nsnbm")
 
-[node name="SlotBackground" type="Sprite2D" parent="."]
+[node name="SlotBackground" type="TextureRect" parent="."]
 unique_name_in_owner = true
 texture_filter = 1
+layout_mode = 0
 texture = ExtResource("2_22dgf")
-centered = false
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 0
@@ -30,8 +30,9 @@ offset_bottom = 16.0
 [node name="Panel" type="Panel" parent="CenterContainer"]
 layout_mode = 2
 
-[node name="ItemImage" type="Sprite2D" parent="CenterContainer/Panel"]
+[node name="ItemImage" type="TextureRect" parent="CenterContainer/Panel"]
 unique_name_in_owner = true
+layout_mode = 0
 
 [node name="StackCount" type="Label" parent="."]
 unique_name_in_owner = true
