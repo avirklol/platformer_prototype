@@ -1,0 +1,65 @@
+[gd_scene load_steps=14 format=3 uid="uid://53s2wdwcnksy"]
+
+[ext_resource type="Texture2D" uid="uid://da527ulq8dwia" path="res://assets/sprites/enemy/Idle/Idle01.png" id="1_63sww"]
+[ext_resource type="Texture2D" uid="uid://bk4egjptxbt0q" path="res://assets/sprites/enemy/Idle/Idle02.png" id="2_ofgs7"]
+[ext_resource type="Script" uid="uid://f1rrahsb8jb1" path="res://menus/resources/button_data.gd" id="2_rtdg5"]
+[ext_resource type="Texture2D" uid="uid://d3n7gmb3s67pl" path="res://assets/sprites/enemy/Idle/Idle03.png" id="3_f3dkc"]
+[ext_resource type="Script" uid="uid://jtw3fwrrcv6g" path="res://menus/resources/interaction_data.gd" id="3_fh26a"]
+[ext_resource type="Texture2D" uid="uid://bk828e6bsic7v" path="res://assets/sprites/enemy/Idle/Idle04.png" id="4_rtdg5"]
+[ext_resource type="Texture2D" uid="uid://c7v513wk0ybi8" path="res://assets/sprites/enemy/Idle/Idle05.png" id="5_fh26a"]
+[ext_resource type="Texture2D" uid="uid://bsqvx85g864a7" path="res://assets/sprites/enemy/Idle/Idle06.png" id="6_lwy3c"]
+[ext_resource type="Texture2D" uid="uid://vqjnx48v5gjv" path="res://assets/sprites/enemy/Idle/Idle07.png" id="7_s7dik"]
+[ext_resource type="Script" uid="uid://c3a36ftpci0rv" path="res://interactables/npcs/test_npc.gd" id="8_ofgs7"]
+
+[sub_resource type="Resource" id="Resource_rtdg5"]
+script = ExtResource("3_fh26a")
+interaction_type = 0
+button_names = Array[ExtResource("2_rtdg5")]([])
+metadata/_custom_type_script = "uid://jtw3fwrrcv6g"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k5q3t"]
+size = Vector2(20, 41)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2tc72"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_63sww")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_ofgs7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_f3dkc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_rtdg5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_fh26a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_lwy3c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_s7dik")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="TestNPC" type="Area2D"]
+collision_mask = 3
+script = ExtResource("8_ofgs7")
+interaction_data = SubResource("Resource_rtdg5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 21.5)
+shape = SubResource("RectangleShape2D_k5q3t")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_2tc72")
+autoplay = "default"
+frame_progress = 0.489243
