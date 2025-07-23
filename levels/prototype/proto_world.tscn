@@ -1,13 +1,14 @@
-[gd_scene load_steps=18 format=4 uid="uid://bk2363y843fiq"]
+[gd_scene load_steps=19 format=4 uid="uid://bk2363y843fiq"]
 
 [ext_resource type="Script" uid="uid://qh6mvxk25pll" path="res://levels/prototype/proto_world.gd" id="1_e4406"]
-[ext_resource type="PackedScene" uid="uid://bfsm1wneyo2ki" path="res://interactables/platform.tscn" id="2_jnhch"]
+[ext_resource type="PackedScene" uid="uid://bfsm1wneyo2ki" path="res://interactables/platforms/platform.tscn" id="2_jnhch"]
 [ext_resource type="PackedScene" uid="uid://dng8w80c7lkie" path="res://player/player.tscn" id="3_xkavu"]
 [ext_resource type="Texture2D" uid="uid://ph4ivah3hwvg" path="res://assets/tilesets/platformer_prototype/AllAngles/BlueprintTilesetWarm.png" id="4_2xsxy"]
 [ext_resource type="PackedScene" uid="uid://d3g2y4iricaq0" path="res://interactables/ladders/medium_ladder.tscn" id="5_c0ie8"]
 [ext_resource type="Texture2D" uid="uid://bubphcc4c5nup" path="res://assets/tilesets/swamp/1 Tiles/Tileset.png" id="5_o5may"]
 [ext_resource type="PackedScene" uid="uid://balb28vf3fdqp" path="res://interactables/ladders/small_ladder.tscn" id="6_cq8qb"]
-[ext_resource type="PackedScene" uid="uid://dsu08oce8weir" path="res://interactables/items/containers/chest.tscn" id="12_1e3dm"]
+[ext_resource type="PackedScene" uid="uid://53s2wdwcnksy" path="res://interactables/npcs/test_npc.tscn" id="9_t7ggy"]
+[ext_resource type="PackedScene" uid="uid://dsu08oce8weir" path="res://interactables/containers/chest.tscn" id="12_1e3dm"]
 
 [sub_resource type="Animation" id="Animation_4mrxx"]
 length = 0.001
@@ -1043,6 +1044,9 @@ z_index = 2
 position = Vector2(-559, -38)
 
 [node name="Chest" parent="." instance=ExtResource("12_1e3dm")]
-position = Vector2(-76, 328)
+position = Vector2(-1370, 328)
 item_type = "key"
 loot_amount = 5
+
+[node name="TestNPC" parent="." instance=ExtResource("9_t7ggy")]
+position = Vector2(-1457, 294)

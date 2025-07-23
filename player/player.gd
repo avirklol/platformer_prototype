@@ -6,6 +6,7 @@ extends CharacterBody2D
 @onready var state_machine: Node = $StateMachine
 @onready var input_handler: Node = $InputHandler
 @onready var inventory: Inventory = $Inventory
+@onready var interaction_menu: PanelContainer = $InteractionMenu
 @onready var stats: PlayerStats = $Stats
 @onready var floor_check: ShapeCast2D = %FloorCheck
 @onready var ledge_grab: CollisionShape2D = %LedgeGrab
@@ -36,7 +37,10 @@ func _physics_process(delta: float) -> void:
 			is_on = cell_data.get_custom_data("type")
 		else:
 			print("No cell data")
-			# print("No cell data on " + str(cell_position) + " --- " + str(floor_check.get_collider_rid(0)))
+			# print("No cell data for tile at position {cell_position} --- TILE {rid}".format({
+			# 	"cell_position": cell_position,
+			# 	"rid": floor_check.get_collider_rid(0)
+			# }))
 
 	state_machine.process_physics(delta)
 	# print(position)

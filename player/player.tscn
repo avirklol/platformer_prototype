@@ -1,4 +1,4 @@
-[gd_scene load_steps=205 format=3 uid="uid://dng8w80c7lkie"]
+[gd_scene load_steps=206 format=3 uid="uid://dng8w80c7lkie"]
 
 [ext_resource type="Texture2D" uid="uid://b55jtbyibw7j8" path="res://assets/sprites/player/PlayerSheet.png" id="1_3vyb7"]
 [ext_resource type="Script" uid="uid://cdmsmcyf2ofct" path="res://player/player.gd" id="1_g2els"]
@@ -184,6 +184,7 @@
 [ext_resource type="Script" uid="uid://dmnl05egf0nir" path="res://player/states/movement/ladder_down_climb.gd" id="169_yc32c"]
 [ext_resource type="Script" uid="uid://cbwcwhfve8ril" path="res://player/states/movement/death.gd" id="181_ep0wi"]
 [ext_resource type="PackedScene" uid="uid://c38vcmu1204bc" path="res://player/data/player_stats.tscn" id="183_ep0wi"]
+[ext_resource type="PackedScene" uid="uid://b53gkgdn0umru" path="res://menus/interaction_menu.tscn" id="185_r7062"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_lxlsd"]
 
@@ -1449,6 +1450,13 @@ offset_left = 26.0
 offset_top = -100.0
 offset_right = 75.0
 offset_bottom = -54.0
+
+[node name="InteractionMenu" parent="." instance=ExtResource("185_r7062")]
+visible = false
+offset_left = -10.0
+offset_top = -79.0
+offset_right = 10.0
+offset_bottom = -59.0
 
 [node name="Audio" type="Node" parent="."]
 
