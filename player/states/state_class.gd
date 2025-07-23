@@ -1,5 +1,5 @@
-class_name State
 extends Node
+class_name State
 
 @export var animation_name: String
 @export var effect_name: String
