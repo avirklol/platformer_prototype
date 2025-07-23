@@ -1,6 +1,6 @@
 [gd_scene load_steps=29 format=3 uid="uid://dsu08oce8weir"]
 
-[ext_resource type="Script" uid="uid://bg887i23jiw6v" path="res://interactables/items/containers/chest.gd" id="1_vd551"]
+[ext_resource type="Script" uid="uid://bg887i23jiw6v" path="res://interactables/containers/chest.gd" id="1_vd551"]
 [ext_resource type="Texture2D" uid="uid://ctqu4cytv2tia" path="res://assets/used/Chest/ChestClosed.png" id="2_p5pcl"]
 [ext_resource type="Texture2D" uid="uid://diofyihkmartl" path="res://assets/used/Chest/ChestHit.png" id="3_oc5vg"]
 [ext_resource type="Texture2D" uid="uid://m6cjdwwgyaek" path="res://assets/used/Chest/ChestOpen.png" id="4_dv1yy"]
