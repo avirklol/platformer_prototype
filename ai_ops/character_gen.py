@@ -1,6 +1,7 @@
 import random
 import asyncio
 import pandas as pd
+from time import time
 from dotenv import load_dotenv
 # from mem0 import AsyncMemory
 import click
@@ -247,7 +248,9 @@ async def main() -> None:
     The characters will be saved to a CSV file named "characters.csv" on the desktop.
     """
 
-    used_names = []
+    used_full_names = []
+    used_first_names = []
+    used_last_names = []
     awaiting_input = True
 
     # Helper Function
@@ -264,19 +267,30 @@ async def main() -> None:
             used_names (list): A list of used character names.
         """
         try:
-            full_name = f"{dict_data['first_name']} {dict_data['last_name']}"
+            first_name = dict_data['first_name']
+            last_name = dict_data['last_name']
+            full_name = f"{first_name} {last_name}"
         except KeyError:
             click.echo(click.style("KeyError: That wasn't a valid character data dictionary", fg="red", bold=True))
 
-        if full_name in used_names:
-            click.echo(click.style(f"{full_name} already used, generating new name...", fg="red", bold=True))
+        if full_name in used_full_names or first_name in used_first_names or last_name in used_last_names:
+            if first_name in used_first_names:
+                click.echo(click.style(f"{first_name} already used, generating new first name...", fg="red", bold=True))
+                response = await generate_character(f"DUPLICATE CHARACTER {full_name} : {dict_data} \n {used_first_names}")
+            elif last_name in used_last_names:
+                click.echo(click.style(f"{last_name} already used, generating new last name...", fg="red", bold=True))
+                response = await generate_character(f"DUPLICATE CHARACTER {full_name} : {dict_data} \n {used_last_names}")
+            else:
+                click.echo(click.style(f"{full_name} already used, generating new name...", fg="red", bold=True))
+                response = await generate_character(f"DUPLICATE CHARACTER {full_name} : {dict_data} \n {used_full_names}")
 
-            response = await generate_character(f"DUPLICATE CHARACTER {full_name} : {dict_data} \n {used_names}")
             dict_data.update(response.parsed)
 
             await duplicate_check(dict_data)
 
-        used_names.append(full_name)
+        used_full_names.append(full_name)
+        used_first_names.append(first_name)
+        used_last_names.append(last_name)
 
     while awaiting_input:
         input_prompt = input("How many characters would you like to generate? ")
@@ -286,6 +300,8 @@ async def main() -> None:
             awaiting_input = False
         except ValueError:
             print("Please enter a valid number!")
+
+    start_time = time()
 
     jobs = [generate_character(f"CREATE CHARACTER {generate_name(style='capital')} - {random.choice(ROLES)} - {random.choice(ALIGNMENTS)}") for _ in range(input_prompt)]
 
@@ -303,6 +319,11 @@ async def main() -> None:
     token_cost = ((sum([result.usage_metadata.total_token_count for result in results]) / 1000000) * 0.10)
 
     click.echo(click.style(f"Total token cost: {token_cost:.2f} USD", fg="green"))
+
+    end_time = time()
+
+    click.echo(click.style(f"Time taken: {end_time - start_time:.2f} seconds", fg="green"))
+
     if token_cost < 0.01:
         click.echo(click.style(f"{input_prompt} CHARACTERS GENERATED FOR FUCKING FREEEEEEE. WHAT A TIME TO BE ALIVE.", fg="green", blink=True, bold=True))
 
