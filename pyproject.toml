@@ -2,4 +2,12 @@
 name = "platformer-prototype"
 version = "0.1.0"
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "click>=8.2.1",
+    "dotenv>=0.9.9",
+    "google>=3.0.0",
+    "google-genai>=1.26.0",
+    "mem0ai>=0.1.114",
+    "names-generator>=0.2.0",
+    "pandas>=2.3.1",
+]
