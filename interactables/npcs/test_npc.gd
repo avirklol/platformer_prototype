@@ -1,5 +1,4 @@
-extends Interactable
-
+extends NPC
 
 func _process(delta: float) -> void:
 	if player:
@@ -16,13 +15,3 @@ func _process(delta: float) -> void:
 
 	if !player and interaction_active:
 		close_interaction()
-
-
-func open_interaction() -> void:
-	pass
-
-func close_interaction() -> void:
-	interaction_menu.visible = false
-	interaction_menu.destroy_interaction_menu()
-	interaction_active = false
-	interaction_menu = null

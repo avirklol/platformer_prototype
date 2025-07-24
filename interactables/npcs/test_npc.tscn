@@ -2,20 +2,14 @@
 
 [ext_resource type="Texture2D" uid="uid://da527ulq8dwia" path="res://assets/sprites/enemy/Idle/Idle01.png" id="1_63sww"]
 [ext_resource type="Texture2D" uid="uid://bk4egjptxbt0q" path="res://assets/sprites/enemy/Idle/Idle02.png" id="2_ofgs7"]
-[ext_resource type="Script" uid="uid://f1rrahsb8jb1" path="res://menus/resources/button_data.gd" id="2_rtdg5"]
 [ext_resource type="Texture2D" uid="uid://d3n7gmb3s67pl" path="res://assets/sprites/enemy/Idle/Idle03.png" id="3_f3dkc"]
-[ext_resource type="Script" uid="uid://jtw3fwrrcv6g" path="res://menus/resources/interaction_data.gd" id="3_fh26a"]
 [ext_resource type="Texture2D" uid="uid://bk828e6bsic7v" path="res://assets/sprites/enemy/Idle/Idle04.png" id="4_rtdg5"]
 [ext_resource type="Texture2D" uid="uid://c7v513wk0ybi8" path="res://assets/sprites/enemy/Idle/Idle05.png" id="5_fh26a"]
 [ext_resource type="Texture2D" uid="uid://bsqvx85g864a7" path="res://assets/sprites/enemy/Idle/Idle06.png" id="6_lwy3c"]
 [ext_resource type="Texture2D" uid="uid://vqjnx48v5gjv" path="res://assets/sprites/enemy/Idle/Idle07.png" id="7_s7dik"]
 [ext_resource type="Script" uid="uid://c3a36ftpci0rv" path="res://interactables/npcs/test_npc.gd" id="8_ofgs7"]
-
-[sub_resource type="Resource" id="Resource_rtdg5"]
-script = ExtResource("3_fh26a")
-interaction_type = 0
-button_names = Array[ExtResource("2_rtdg5")]([])
-metadata/_custom_type_script = "uid://jtw3fwrrcv6g"
+[ext_resource type="Script" uid="uid://bupnh0kqklshe" path="res://addons/player2/Player2AINPC.gd" id="9_f3dkc"]
+[ext_resource type="Script" uid="uid://b6indg81ao1we" path="res://addons/player2/player2_config.gd" id="10_rtdg5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k5q3t"]
 size = Vector2(20, 41)
@@ -49,10 +43,25 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="Resource" id="Resource_fh26a"]
+resource_local_to_scene = true
+script = ExtResource("10_rtdg5")
+player2_game_key = "platformer_prototype"
+error_log_ui = true
+endpoint_chat = "http://127.0.0.1:4315/v1/chat/completions"
+endpoint_health = "http://127.0.0.1:4315/v1/health"
+endpoint_tts_speak = "http://127.0.0.1:4315/v1/tts/speak"
+endpoint_tts_stop = "http://127.0.0.1:4315/v1/tts/stop"
+endpoint_get_selected_characters = "http://127.0.0.1:4315/v1/selected_characters"
+endpoint_stt_start = "http://127.0.0.1:4315/v1/stt/start"
+endpoint_stt_stop = "http://127.0.0.1:4315/v1/stt/stop"
+request_too_much_delay_seconds = 3.0
+metadata/_custom_type_script = "uid://b6indg81ao1we"
+
 [node name="TestNPC" type="Area2D"]
 collision_mask = 3
 script = ExtResource("8_ofgs7")
-interaction_data = SubResource("Resource_rtdg5")
+metadata/_custom_type_script = "uid://cvl8h0ft6ymeu"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 21.5)
@@ -63,3 +72,8 @@ texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_2tc72")
 autoplay = "default"
 frame_progress = 0.489243
+
+[node name="Player2AINPC" type="Node" parent="."]
+script = ExtResource("9_f3dkc")
+config = SubResource("Resource_fh26a")
+metadata/_custom_type_script = "uid://bupnh0kqklshe"

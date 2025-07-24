@@ -16,8 +16,8 @@ client = genai.Client()
 
 MODEL = "gemini-2.0-flash"
 
-SYSTEM_INSTRUCTION = """
-CORE INSTRUCTIONS
+GENERATOR_INSTRUCTION = """
+CHARACTER GENERATOR INSTRUCTIONS
 ---------------------------------
 You are a character generator.
 
@@ -42,26 +42,37 @@ You will then make up a character based on the codename and the provided schema;
 
 The characters will be used in a game that is set in the not too distant future where players control a super soldier that will accomplish missions across various theaters of war across the globe.
 Maintain a consistent style and realistic tone for the characters; ensure that the characters are consistent with the game setting and are not generic or linked to common tropes.
+"""
 
-
+DUPLICATE_INSTRUCTIONS = """
 DUPLICATE CHARACTER CASE HANDLING
 ---------------------------------
-Since you're an asynchronous agent, you may generate the same character multiple times. We'll catch this and follow up with the following prompt schema:
+You are a character generator that is addressing duplicated character names.
 
-DUPLICATE CHARACTER <CHARACTER NAME> : <CHARACTER DATA DICTIONARY>
-[<OTHER CREATED CHARACTER NAMES>]
+You will be provided the following prompt schema:
+
+DUPLICATE CHARACTER || DUPLICATE FIRST NAME || DUPLICATE LAST NAME || <CHARACTER NAME> : <CHARACTER DATA DICTIONARY>
+[<LIST OF ALREADY USED NAMES TO AVOID>]
 
 Examples:
 
 1:
-DUPLICATE CHARACTER "Marcus Cole" : {"first_name": "Moby", "last_name": "Meister", "bio": "Moby Meister is...", ... }
-[Kenzo Tanaka, Jordan Hayes, ...]
+DUPLICATE CHARACTER "Marcus Cole" : {"first_name": "Marcus", "last_name": "Cole", "bio": "Marcus Cole is...", ... }
+[Marcus Cole, Jordan Hayes, ...]
 
 2:
-DUPLICATE CHARACTER "Kenzo Tanaka" : {"first_name": "Baby", "last_name": "Howie", "bio": "Baby Howie is...", ... }
-[Cassius Claye, Julia Kowalski, ...]
+DUPLICATE CHARACTER "Kenzo Tanaka" : {"first_name": "Kenzo", "last_name": "Tanaka", "bio": "Kenzo Tanaka is...", ... }
+[Kenzo Tanaka, Julia Kowalski, ...]
 
-In this case, all you'll need to do is generate a new first and last name that lines up with the character data dictionary and doesn't match any of the other created character names.
+3:
+DUPLICATE FIRST NAME "Moby" : {"first_name": "Moby", "last_name": "Richardson", "bio": "Moby Richardson is...", ... }
+[Moby Richardson, Jordan Hayes, ...]
+
+4:
+DUPLICATE LAST NAME "Kristofferson" : {"first_name": "Sean", "last_name": "Kristofferson", "bio": "Sean Kristofferson is...", ... }
+[Sean Kristofferson, Moby Richardson, ...]
+
+Leverage the provided schema and the list of already used names to generate a new name and bio that lines up with the character data dictionary and doesn't match any of the other created character names.
 """
 
 ROLES = [
@@ -199,14 +210,14 @@ character_generator = client.aio.chats.create(
     model=MODEL,
     config=types.GenerateContentConfig(
         temperature=0.7,
-        system_instruction=SYSTEM_INSTRUCTION,
+        system_instruction=GENERATOR_INSTRUCTION,
         response_mime_type='application/json',
         response_schema=SCHEMA_CONFIG
     )
 )
 
 
-async def generate_character(contents: str) -> types.GenerateContentResponse:
+async def generate_character(contents: str, duplicate_check: bool = False) -> types.GenerateContentResponse:
     """
     Generate a character based on the contents of the prompt.
     The contents of the prompt will be a string that will be used to generate the character.
@@ -222,7 +233,7 @@ async def generate_character(contents: str) -> types.GenerateContentResponse:
             config=types.GenerateContentConfig(
                 temperature=0.75,
                 seed=seed,
-                system_instruction=SYSTEM_INSTRUCTION,
+                system_instruction=GENERATOR_INSTRUCTION if not duplicate_check else DUPLICATE_INSTRUCTIONS,
                 response_mime_type='application/json',
                 response_schema=SCHEMA_CONFIG
             ),
@@ -251,7 +262,9 @@ async def main() -> None:
     used_full_names = []
     used_first_names = []
     used_last_names = []
-    awaiting_input = True
+    awaiting_input_prompt = True
+    awaiting_sibling_prompt = True
+    siblings_allowed = False
 
     # Helper Function
     async def duplicate_check(dict_data: dict) -> None:
@@ -273,16 +286,16 @@ async def main() -> None:
         except KeyError:
             click.echo(click.style("KeyError: That wasn't a valid character data dictionary", fg="red", bold=True))
 
-        if full_name in used_full_names or first_name in used_first_names or last_name in used_last_names:
+        if full_name in used_full_names or first_name in used_first_names or (last_name in used_last_names and not siblings_allowed):
             if first_name in used_first_names:
                 click.echo(click.style(f"{first_name} already used, generating new first name...", fg="red", bold=True))
-                response = await generate_character(f"DUPLICATE CHARACTER {full_name} : {dict_data} \n {used_first_names}")
+                response = await generate_character(f"DUPLICATE FIRST NAME {first_name} : {dict_data} \n {used_full_names}", duplicate_check=True)
             elif last_name in used_last_names:
                 click.echo(click.style(f"{last_name} already used, generating new last name...", fg="red", bold=True))
-                response = await generate_character(f"DUPLICATE CHARACTER {full_name} : {dict_data} \n {used_last_names}")
+                response = await generate_character(f"DUPLICATE LAST NAME {last_name} : {dict_data} \n {used_full_names}", duplicate_check=True)
             else:
                 click.echo(click.style(f"{full_name} already used, generating new name...", fg="red", bold=True))
-                response = await generate_character(f"DUPLICATE CHARACTER {full_name} : {dict_data} \n {used_full_names}")
+                response = await generate_character(f"DUPLICATE CHARACTER {full_name} : {dict_data} \n {used_full_names}", duplicate_check=True)
 
             dict_data.update(response.parsed)
 
@@ -292,14 +305,23 @@ async def main() -> None:
         used_first_names.append(first_name)
         used_last_names.append(last_name)
 
-    while awaiting_input:
-        input_prompt = input("How many characters would you like to generate? ")
+    while awaiting_input_prompt:
+        input_prompt = input("How many characters would you like to generate?").strip()
 
         try:
             input_prompt = int(input_prompt)
-            awaiting_input = False
+            while awaiting_sibling_prompt:
+                sibling_prompt = input("Would you like to generate sibling characters? (y/n)").strip().lower()
+                if sibling_prompt == "y":
+                    siblings_allowed = True
+                    awaiting_sibling_prompt = False
+                elif sibling_prompt == "n":
+                    awaiting_sibling_prompt = False
+                else:
+                    click.echo(click.style("Please enter a valid response!", fg="red", bold=True))
+            awaiting_input_prompt = False
         except ValueError:
-            print("Please enter a valid number!")
+            click.echo(click.style("Please enter a valid number!", fg="red", bold=True))
 
     start_time = time()
 
@@ -309,15 +331,18 @@ async def main() -> None:
 
     parsed_results = [result.parsed for result in results]
 
-    for result in parsed_results:
+    for index, result in enumerate(parsed_results):
+        click.echo(click.style(f"Checking for duplicates for character {index + 1} of {input_prompt}...", fg="yellow"))
         await duplicate_check(result)
 
     df = pd.DataFrame(parsed_results)
 
     df.to_csv("~/Desktop/characters.csv", index=False)
 
-    token_cost = ((sum([result.usage_metadata.total_token_count for result in results]) / 1000000) * 0.10)
+    total_tokens = sum([result.usage_metadata.total_token_count for result in results])
+    token_cost = ((total_tokens / 1000000) * 0.10)
 
+    click.echo(click.style(f"Total tokens: {total_tokens}", fg="green"))
     click.echo(click.style(f"Total token cost: {token_cost:.2f} USD", fg="green"))
 
     end_time = time()
