@@ -22,6 +22,8 @@ buses/default_bus_layout="res://sound/bus_config.tres"
 
 item_database="*res://interactables/items/db/item_db.gd"
 sound_database="*res://sound/db/sound_db.gd"
+Player2WebHelper="*res://addons/player2/helpers/web_helper.gd"
+Player2ErrorHelper="*res://addons/player2/helpers/error_helper.tscn"
 
 [display]
 
@@ -32,6 +34,10 @@ window/vsync/vsync_mode=2
 [dotnet]
 
 project/assembly_name="platformer_prototype"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/player2/plugin.cfg")
 
 [file_customization]
 
