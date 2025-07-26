@@ -3,8 +3,8 @@ import asyncio
 from time import time
 import pandas as pd
 from dotenv import load_dotenv
-# from mem0 import AsyncMemory
 import click
+from pycountry import countries
 from names_generator import generate_name
 from google import genai
 from google.genai import types
@@ -12,7 +12,6 @@ from google.genai import types
 load_dotenv()
 
 client = genai.Client()
-# memory = AsyncMemory()
 
 MODEL = "gemini-2.0-flash"
 
@@ -25,18 +24,18 @@ You will be told to create a character and will leverage the CHARACTER DATA DICT
 
 The user will provide you with the following prompt schema:
 
-CREATE CHARACTER "<RANDOM CODENAME>" - "<ROLE>" - "<ALIGNMENT>"
+CREATE CHARACTER "<RANDOM CODENAME>" - "<GENDER>" - "<ROLE>" - "<ALIGNMENT>" - "<COUNTRY>"
 
 Examples:
 
 1:
-CREATE CHARACTER "Vigorous Goldstein" - "Commander" - "Lawful Good"
+CREATE CHARACTER "Vigorous Goldstein" - "male" - "Commander" - "Lawful Good" - "Canada"
 
 2:
-CREATE CHARACTER "Moby Meister" - "Special Forces Operator" - "Chaotic Good"
+CREATE CHARACTER "Solid Cobra" - "male" - "Special Forces Operator" - "Chaotic Good" - "India"
 
 3:
-CREATE CHARACTER "Baby Howie" - "Civilian" - "Chaotic Evil"
+CREATE CHARACTER "Baby Howie" - "male" - "Civilian" - "Chaotic Evil" - "United States"
 
 You will then make up a character based on the codename and the provided schema; the first and last name will be made up by you.
 
@@ -52,26 +51,28 @@ You are a character generator that is addressing duplicated character names and 
 
 You will be provided the following prompt schema:
 
-DUPLICATE FIRST NAME || DUPLICATE LAST NAME || "<CHARACTER NAME>" : {CHARACTER DATA DICTIONARY}
+DUPLICATE FIRST NAME || DUPLICATE LAST NAME || - NEW CODENAME "<NEW CODENAME>" - NEW COUNTRY "<NEW COUNTRY>": {CHARACTER DATA DICTIONARY}
 EXISTING FIRST NAMES || EXISTING LAST NAMES: [<LIST OF ALREADY USED NAMES TO NOT USE>]
 
 Examples:
 
 PROMPT 1:
-DUPLICATE FIRST NAME "Moby" : {"first_name": "Moby", "last_name": "Richardson", ... }
+DUPLICATE FIRST NAME - NEW CODENAME "Silent Johnson" - NEW COUNTRY "United States" : {"first_name": "Moby", "last_name": "Richardson", ... }
 EXISTING FIRST NAMES: [Moby, Jordan, Alex, John ...]
 
 RESPONSE 1:
 {"first_name": "Jackson", "last_name": "Donaldson", ... }
 
 PROMPT 2:
-DUPLICATE LAST NAME "Kristofferson" : {"first_name": "Sean", "last_name": "Kristofferson", ... }
+DUPLICATE LAST NAME - NEW CODENAME "Dark Heisenberg" - NEW COUNTRY "Germany" : {"first_name": "Sean", "last_name": "Kristofferson", ... }
 EXISTING LAST NAMES: [Kristofferson, Richardson, Kowalski, ...]
 
 RESPONSE 2:
-{"first_name": "Adam", "last_name": "Gordon", ... }
+{"first_name": "Hans", "last_name": "Nudelman", ... }
 
-It is important that you intake the list of already used names prior to generating a NEW NAME and NEW BIO that lines up with the CHARACTER DATA DICTIONARY and doesn't match any of the EXISTING NAMES.
+It is important that you intake the list of already used names prior to generating a new CHARACTER DATA DICTIONARY with name properties that don't match any of the EXISTING NAMES.
+
+Ensure that you also update the codename to the new codename provided and that all the other properties are consistent with the new name and bio and previously existing role and alignment.
 """
 
 ROLES = [
@@ -105,6 +106,14 @@ ALIGNMENTS = [
     "Chaotic Evil"
 ]
 
+OTHER_GENDERS = [
+    "transgender male",
+    "transgender female",
+    "non-binary",
+    "genderfluid",
+    "intersex"
+]
+
 SCHEMA_CONFIG = types.Schema(
     title='CHARACTER DATA DICTIONARY',
     description='A dictionary of character data that will be used to generate a character in a near future setting featuring global conflict.',
@@ -122,18 +131,38 @@ SCHEMA_CONFIG = types.Schema(
             'type': 'string',
             'description': 'The codename of the character passed in the prompt.'
         },
+        'country': {
+            'type': 'string',
+            'description': 'The country of the character passed in the prompt.'
+        },
         'role': {
             'type': 'string',
-            'description': 'The role of the character passed in the prompt.'
+            'description': 'The role of the character passed in the prompt or previous character data dictionary.'
         },
-        'bio': {
+        'gender': {
             'type': 'string',
-            'description': 'The bio of the character in around 100 words. Avoid the overuse of adverbs and adjectives.'
+            'description': 'The gender of the character passed in the prompt or previous character data dictionary.'
+        },
+        'age': {
+            'type': 'integer',
+            'description': 'The age of the character.'
+        },
+        'height': {
+            'type': 'integer',
+            'description': 'The height of the character in centimeters. Ensure that the height is realistic.'
+        },
+        'weight': {
+            'type': 'integer',
+            'description': 'The weight of the character in pounds. Ensure that the weight is realistic.'
         },
         'alignment': {
             'type': 'string',
             'enum': ALIGNMENTS,
             'description': 'The alignment of the character passed in the prompt.'
+        },
+        'bio': {
+            'type': 'string',
+            'description': 'The bio of the character in around 100 words. Avoid the overuse of adverbs and adjectives.'
         },
         'personality': {
             'type': 'array',
@@ -165,23 +194,6 @@ SCHEMA_CONFIG = types.Schema(
             },
             'description': 'The goals of the character; this is a list of goals that the character possesses.'
         },
-        'gender': {
-            'type': 'string',
-            'enum': ['male', 'female', 'other'],
-            'description': 'The gender of the character.'
-        },
-        'age': {
-            'type': 'integer',
-            'description': 'The age of the character.'
-        },
-        'height': {
-            'type': 'number',
-            'description': 'The height of the character in centimeters.'
-        },
-        'weight': {
-            'type': 'number',
-            'description': 'The weight of the character in pounds.'
-        },
         'health': {
             'type': 'integer',
             'description': 'The health points of the character.'
@@ -203,11 +215,45 @@ SCHEMA_CONFIG = types.Schema(
             'description': 'The defense points of the character.'
         }
     },
-    required=['first_name', 'last_name', 'codename', 'bio', 'role', 'alignment', 'personality', 'interests', 'goals', 'gender', 'age', 'height', 'weight', 'health', 'stamina', 'tech_points', 'attack', 'defense'],
-    property_ordering=['first_name', 'last_name', 'codename', 'role', 'bio', 'alignment', 'personality', 'interests', 'goals', 'gender', 'age', 'height', 'weight', 'health', 'stamina', 'tech_points', 'attack', 'defense']
+    required=['first_name', 'last_name', 'codename', 'country', 'gender', 'bio', 'role', 'alignment', 'personality', 'interests', 'goals', 'age', 'height', 'weight', 'health', 'stamina', 'tech_points', 'attack', 'defense'],
+    property_ordering=['first_name', 'last_name', 'codename', 'country', 'role', 'gender', 'age', 'height', 'weight', 'alignment', 'bio', 'personality', 'interests', 'goals', 'health', 'stamina', 'tech_points', 'attack', 'defense']
 )
 
 
+# Random Country Generator
+def generate_country() -> str:
+    """
+    Generate a country name.
+    """
+    return random.choice(list(countries)).name
+
+
+# Random Gender Generator
+def generate_gender() -> str:
+    """
+    Generate a gender based on realistic distribution.
+    """
+    gender_distribution = {
+        "male": 49.5,
+        "female": 49.5,
+        "other": 1,
+    }
+
+    total = sum(gender_distribution.values())
+    normalized_distribution = {gender: percentage / total for gender, percentage in gender_distribution.items()}
+
+    selected_gender = random.choices(
+        population=list(normalized_distribution.keys()),
+        weights=list(normalized_distribution.values())
+    )[0]
+
+    if selected_gender == "other":
+        return random.choice(OTHER_GENDERS)
+    else:
+        return selected_gender
+
+
+# Character Generator Agent
 async def generate_character(contents: str, duplicate_check: bool = False) -> types.GenerateContentResponse:
     """
     Generate a character based on the contents of the prompt.
@@ -215,7 +261,6 @@ async def generate_character(contents: str, duplicate_check: bool = False) -> ty
     The character will be generated based on the system instruction and the schema config.
     The character will be returned as a GenerateContentResponse object.
     """
-
     seed = random.randint(0, 1000000)
 
     try:
@@ -237,10 +282,6 @@ async def generate_character(contents: str, duplicate_check: bool = False) -> ty
     return response
 
 
-# async def get_memory() -> str:
-#     pass
-
-
 async def main() -> None:
     """
     Wrapper for running the async generate_character function n times.
@@ -258,8 +299,8 @@ async def main() -> None:
     awaiting_sibling_prompt = True
     siblings_allowed = False
 
-    # Helper Function
-    async def duplicate_check(dict_data: dict) -> None:
+    # Duplicate Check Helper Function
+    async def duplicate_check(character_data: dict) -> None:
         """
         Helper function that checks if the character data dictionary is a duplicate of any other character data dictionary.
         If it is, updates dict_data with a new character data dictionary, then calls itself again with the updated dict_data.
@@ -274,38 +315,40 @@ async def main() -> None:
         nonlocal duplicate_processing_tokens, duplicate_processing_token_cost, duplicate_loops
 
         try:
-            first_name = dict_data['first_name']
-            last_name = dict_data['last_name']
+            first_name = character_data['first_name']
+            last_name = character_data['last_name']
         except KeyError:
             click.echo(click.style("KeyError: That wasn't a valid character data dictionary", fg="red", bold=True))
 
         if first_name in used_first_names or (last_name in used_last_names and not siblings_allowed):
             if first_name in used_first_names:
                 click.echo(click.style(f"{first_name} already used, generating new first name...", fg="red"))
-                response = await generate_character(f'DUPLICATE FIRST NAME "{first_name}" : {dict_data} \nEXISTING FIRST NAMES: {random.shuffle(used_first_names)}', duplicate_check=True)
+                response = await generate_character(f'DUPLICATE FIRST NAME - NEW CODENAME "{generate_name(style="capital")}" - NEW COUNTRY "{generate_country()}" : {character_data} \nEXISTING FIRST NAMES: {random.shuffle(used_first_names)}', duplicate_check=True)
             else:
                 click.echo(click.style(f"{last_name} already used, generating new last name...", fg="red"))
-                response = await generate_character(f'DUPLICATE LAST NAME "{last_name}" : {dict_data} \nEXISTING LAST NAMES: {random.shuffle(used_last_names)}', duplicate_check=True)
+                response = await generate_character(f'DUPLICATE LAST NAME - NEW CODENAME "{generate_name(style="capital")}" - NEW COUNTRY "{generate_country()}" : {character_data} \nEXISTING LAST NAMES: {random.shuffle(used_last_names)}', duplicate_check=True)
 
             response_tokens = response.usage_metadata.total_token_count
             duplicate_processing_tokens += response_tokens
             duplicate_processing_token_cost += ((response_tokens / 1000000) * 0.10)
             duplicate_loops += 1
 
-            dict_data.update(response.parsed)
+            character_data.update(response.parsed)
 
-            await duplicate_check(dict_data)
+            await duplicate_check(character_data)
 
         used_first_names.append(first_name)
         used_last_names.append(last_name)
 
     while awaiting_input_prompt:
-        input_prompt = input("How many characters would you like to generate?").strip()
+        input_prompt = input("How many characters would you like to generate? ").strip()
 
         try:
             input_prompt = int(input_prompt)
+
             while awaiting_sibling_prompt:
-                sibling_prompt = input("Would you like to generate sibling characters? (y/n)").strip().lower()
+                sibling_prompt = input("Would you like to generate sibling characters? (y/n) ").strip().lower()
+
                 if sibling_prompt == "y":
                     siblings_allowed = True
                     awaiting_sibling_prompt = False
@@ -313,30 +356,39 @@ async def main() -> None:
                     awaiting_sibling_prompt = False
                 else:
                     click.echo(click.style("Please enter a valid response!", fg="red", bold=True))
+
             awaiting_input_prompt = False
+
         except ValueError:
             click.echo(click.style("Please enter a valid number!", fg="red", bold=True))
 
     start_time = time()
 
-    jobs = [generate_character(f'CREATE CHARACTER "{generate_name(style='capital')}" - "{random.choice(ROLES)}" - "{random.choice(ALIGNMENTS)}"') for _ in range(input_prompt)]
+    click.echo(click.style(f"Generating {input_prompt} characters...", fg="green", bold=True))
+
+    jobs = [generate_character(f'CREATE CHARACTER "{generate_name(style="capital")}" - "{generate_gender()}" - "{random.choice(ROLES)}" - "{random.choice(ALIGNMENTS)}" - "{generate_country()}"') for _ in range(input_prompt)]
 
     results = await asyncio.gather(*jobs)
 
+    click.echo(click.style("-----------------------------------------------------", fg="green", bold=True))
+    click.echo(click.style(f"ASYNC GENERATION COMPLETE! \nTIME TAKEN: {time() - start_time:.2f} seconds", fg="green", bold=True))
+    click.echo(click.style("-----------------------------------------------------", fg="green", bold=True))
+
     total_tokens = sum([result.usage_metadata.total_token_count for result in results])
 
-    parsed_results = [result.parsed for result in results]
+    characters = [result.parsed for result in results]
 
-    for index, result in enumerate(parsed_results, 1):
-        time_taken = time()
+    # Duplicate Check
+    for index, character in enumerate(characters, 1):
         click.echo(click.style("-----------------------------------------------------", fg="yellow", bold=True))
         click.echo(click.style(f"Checking for duplicates of character {index} of {input_prompt}...", fg="yellow"))
-        click.echo(click.style("-----------------------------------------------------", fg="yellow", bold=True))
-        await duplicate_check(result)
+        click.echo(click.style(f"----------------------------------------------------- >>> {time() - start_time:.2f} seconds elapsed <<<", fg="yellow", bold=True))
+        time_taken = time()
+        await duplicate_check(character)
         time_taken = time() - time_taken
 
         if duplicate_processing_tokens > 0:
-            click.echo(click.style("--------------------------------", fg="yellow", bold=True))
+            click.echo(click.style("-------", fg="yellow", bold=True))
             if duplicate_loops > 10:
                 click.echo(click.style('OOF THAT TOOK A WHILE! (SOMETHING MIGHT BE WRONG)', fg="red", bold=True))
             click.echo(click.style(f"NEW CHARACTER GENERATED! \nADDITIONAL TOKENS: {duplicate_processing_tokens} \nCOST: {duplicate_processing_token_cost:.2f} USD \nTIME TAKEN: {time_taken:.2f} seconds \nLOOPS: {duplicate_loops}", fg="green"))
@@ -347,22 +399,22 @@ async def main() -> None:
         else:
             click.echo(click.style("NONE FOUND!", fg="green"))
 
-    df = pd.DataFrame(parsed_results)
+    end_time = time()
+
+    df = pd.DataFrame(characters)
 
     df.to_csv("~/Desktop/characters.csv", index=False)
 
-    token_cost = ((total_tokens / 1000000) * 0.10)
+    total_token_cost = ((total_tokens / 1000000) * 0.10)
 
-    click.echo(click.style("--------------------------------", fg="green", bold=True))
+    click.echo(click.style("-----------------------------------------------------", fg="green", bold=True))
     click.echo(click.style(f"TOTAL TOKENS USED: {total_tokens}", fg="green", bold=True))
-    click.echo(click.style(f"TOTAL TOKEN COST: {token_cost:.2f} USD", fg="green", bold=True))
+    click.echo(click.style(f"TOTAL TOKEN COST: {total_token_cost:.2f} USD", fg="green", bold=True))
+    click.echo(click.style(f"TIME TAKEN: {end_time - start_time:.2f} seconds", fg="green", bold=True))
 
-    end_time = time()
-
-    click.echo(click.style(f"TIME TAKEN: {end_time - start_time:.2f} seconds", fg="green"))
-
-    if token_cost < 0.01:
-        click.echo(click.style(f"Generating {input_prompt} characters resulted in a free run!", fg="green", bold=True))
+    if total_token_cost < 0.01:
+        click.echo(click.style("-----------------------------------------------------", fg="green", bold=True))
+        click.echo(click.style(f"Generating {input_prompt} characters resulted in a free-ish run!", fg="green", bold=True))
 
 
 if __name__ == "__main__":
