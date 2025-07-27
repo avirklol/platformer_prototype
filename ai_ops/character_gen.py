@@ -260,6 +260,13 @@ async def generate_character(contents: str, duplicate_check: bool = False) -> ty
     The contents of the prompt will be a string that will be used to generate the character.
     The character will be generated based on the system instruction and the schema config.
     The character will be returned as a GenerateContentResponse object.
+
+    Args:
+        contents (str): The contents of the prompt.
+        duplicate_check (bool): Whether to check for duplicates, if True passes DUPLICATE_INSTRUCTIONS to the system instruction parameter in the GenerateContentConfig object.
+
+    Returns:
+        types.GenerateContentResponse: The generated character.
     """
     seed = random.randint(0, 1000000)
 
@@ -295,9 +302,11 @@ async def main() -> None:
     duplicate_loops = 0
     used_first_names = []
     used_last_names = []
-    awaiting_input_prompt = True
-    awaiting_sibling_prompt = True
-    siblings_allowed = False
+    awaiting_config = True
+    awaiting_first_name_prompt = True
+    awaiting_last_name_prompt = True
+    first_name_duplicate_check = True
+    last_name_duplicate_check = True
 
     # Duplicate Check Helper Function
     async def duplicate_check(character_data: dict) -> None:
@@ -324,12 +333,14 @@ async def main() -> None:
         except KeyError:
             click.echo(click.style("KeyError: That wasn't a valid character data dictionary", fg="red", bold=True))
 
-        if first_name in used_first_names or (last_name in used_last_names and not siblings_allowed):
+        if (first_name in used_first_names and first_name_duplicate_check) or (last_name in used_last_names and last_name_duplicate_check):
             if first_name in used_first_names:
                 click.echo(click.style(f"{first_name} already used, generating new first name...", fg="red"))
+
                 response = await generate_character(f'DUPLICATE FIRST NAME - NEW CODENAME "{generate_name(style="capital")}" - NEW COUNTRY "{generate_country()}" : {character_data} \nEXISTING FIRST NAMES: {random.shuffle(used_first_names)}', duplicate_check=True)
             else:
                 click.echo(click.style(f"{last_name} already used, generating new last name...", fg="red"))
+
                 response = await generate_character(f'DUPLICATE LAST NAME - NEW CODENAME "{generate_name(style="capital")}" - NEW COUNTRY "{generate_country()}" : {character_data} \nEXISTING LAST NAMES: {random.shuffle(used_last_names)}', duplicate_check=True)
 
             response_tokens = response.usage_metadata.total_token_count
@@ -344,64 +355,80 @@ async def main() -> None:
         used_first_names.append(first_name)
         used_last_names.append(last_name)
 
-    while awaiting_input_prompt:
-        input_prompt = input("How many characters would you like to generate? ").strip()
+    while awaiting_config:
+        character_amount = input("How many characters would you like to generate? ").strip()
 
         try:
-            input_prompt = int(input_prompt)
+            character_amount = int(character_amount)
 
-            while awaiting_sibling_prompt:
-                sibling_prompt = input("Would you like to generate sibling characters? (y/n) ").strip().lower()
+            if character_amount > 1:
+                while awaiting_first_name_prompt:
+                    first_name_prompt = input("Would you like to check for duplicate first names? (y/n) ").strip().lower()
 
-                if sibling_prompt == "y":
-                    siblings_allowed = True
-                    awaiting_sibling_prompt = False
-                elif sibling_prompt == "n":
-                    awaiting_sibling_prompt = False
-                else:
-                    click.echo(click.style("Please enter a valid response!", fg="red", bold=True))
+                    if first_name_prompt == "y":
+                        awaiting_first_name_prompt = False
+                    elif first_name_prompt == "n":
+                        first_name_duplicate_check = False
+                        awaiting_first_name_prompt = False
+                    else:
+                        click.echo(click.style("Please enter a valid response!", fg="red", bold=True))
 
-            awaiting_input_prompt = False
+                while awaiting_last_name_prompt:
+                    last_name_prompt = input("Would you like to check for duplicate last names? (y/n) ").strip().lower()
+
+                    if last_name_prompt == "y":
+                        awaiting_last_name_prompt = False
+                    elif last_name_prompt == "n":
+                        last_name_duplicate_check = False
+                        awaiting_last_name_prompt = False
+                    else:
+                        click.echo(click.style("Please enter a valid response!", fg="red", bold=True))
+            else:
+                first_name_duplicate_check = False
+                last_name_duplicate_check = False
+
+            awaiting_config = False
 
         except ValueError:
             click.echo(click.style("Please enter a valid number!", fg="red", bold=True))
 
     start_time = time()
 
-    click.echo(click.style(f"Generating {input_prompt} characters...", fg="green", bold=True))
+    click.echo(click.style(f"Generating {character_amount} characters...", fg="green", bold=True))
 
-    jobs = [generate_character(f'CREATE CHARACTER "{generate_name(style="capital")}" - "{generate_gender()}" - "{random.choice(ROLES)}" - "{random.choice(ALIGNMENTS)}" - "{generate_country()}"') for _ in range(input_prompt)]
+    jobs = [generate_character(f'CREATE CHARACTER "{generate_name(style="capital")}" - "{generate_gender()}" - "{random.choice(ROLES)}" - "{random.choice(ALIGNMENTS)}" - "{generate_country()}"') for _ in range(character_amount)]
 
     results = await asyncio.gather(*jobs)
 
-    click.echo(click.style("-----------------------------------------------------", fg="green", bold=True))
+    click.echo(click.style("-" * 25, fg="green", bold=True))
     click.echo(click.style(f"ASYNC GENERATION COMPLETE! \nTIME TAKEN: {time() - start_time:.2f} seconds", fg="green", bold=True))
-    click.echo(click.style("-----------------------------------------------------", fg="green", bold=True))
 
     total_tokens = sum([result.usage_metadata.total_token_count for result in results])
 
     characters = [result.parsed for result in results]
 
     # Duplicate Check
-    for index, character in enumerate(characters, 1):
-        click.echo(click.style("-----------------------------------------------------", fg="yellow", bold=True))
-        click.echo(click.style(f"Checking for duplicates of character {index} of {input_prompt}...", fg="yellow"))
-        click.echo(click.style(f"----------------------------------------------------- >>> {time() - start_time:.2f} seconds elapsed <<<", fg="yellow", bold=True))
-        time_taken = time()
-        await duplicate_check(character)
-        time_taken = time() - time_taken
+    if first_name_duplicate_check or last_name_duplicate_check:
+        for index, character in enumerate(characters, 1):
+            click.echo(click.style("-" * 55, fg="yellow", bold=True))
+            click.echo(click.style(f"Checking for duplicates of character {index} of {character_amount}...", fg="yellow"))
+            click.echo(click.style("-" * 55 + f" >>> {time() - start_time:.2f} seconds elapsed <<<", fg="yellow", bold=True))
 
-        if duplicate_processing_tokens > 0:
-            click.echo(click.style("-------", fg="yellow", bold=True))
-            if duplicate_loops > 10:
-                click.echo(click.style('OOF THAT TOOK A WHILE! (SOMETHING MIGHT BE WRONG)', fg="red", bold=True))
-            click.echo(click.style(f"NEW CHARACTER GENERATED! \nADDITIONAL TOKENS: {duplicate_processing_tokens} \nCOST: {duplicate_processing_token_cost:.2f} USD \nTIME TAKEN: {time_taken:.2f} seconds \nLOOPS: {duplicate_loops}", fg="green"))
-            total_tokens += duplicate_processing_tokens
-            duplicate_processing_tokens = 0
-            duplicate_processing_token_cost = 0
-            duplicate_loops = 0
-        else:
-            click.echo(click.style("NONE FOUND!", fg="green"))
+            time_taken = time()
+            await duplicate_check(character)
+            time_taken = time() - time_taken
+
+            if duplicate_processing_tokens > 0:
+                click.echo(click.style("-" * 25, fg="yellow", bold=True))
+                if duplicate_loops > 10:
+                    click.echo(click.style('OOF THAT TOOK A WHILE! (SOMETHING MIGHT BE WRONG)', fg="red", bold=True))
+                click.echo(click.style(f"NEW CHARACTER GENERATED! \nADDITIONAL TOKENS: {duplicate_processing_tokens} \nCOST: {duplicate_processing_token_cost:.2f} USD \nTIME TAKEN: {time_taken:.2f} seconds \nLOOPS: {duplicate_loops}", fg="green"))
+                total_tokens += duplicate_processing_tokens
+                duplicate_processing_tokens = 0
+                duplicate_processing_token_cost = 0
+                duplicate_loops = 0
+            else:
+                click.echo(click.style("NONE FOUND!", fg="green"))
 
     end_time = time()
 
@@ -411,14 +438,15 @@ async def main() -> None:
 
     total_token_cost = ((total_tokens / 1000000) * 0.10)
 
-    click.echo(click.style("-----------------------------------------------------", fg="green", bold=True))
+    click.echo(click.style("-" * 25, fg="green", bold=True))
+    click.echo(click.style("CHARACTER GENERATION COMPLETE!", fg="green", bold=True))
     click.echo(click.style(f"TOTAL TOKENS USED: {total_tokens}", fg="green", bold=True))
     click.echo(click.style(f"TOTAL TOKEN COST: {total_token_cost:.2f} USD", fg="green", bold=True))
     click.echo(click.style(f"TIME TAKEN: {end_time - start_time:.2f} seconds", fg="green", bold=True))
 
     if total_token_cost < 0.01:
-        click.echo(click.style("-----------------------------------------------------", fg="green", bold=True))
-        click.echo(click.style(f"Generating {input_prompt} characters resulted in a free-ish run!", fg="green", bold=True))
+        click.echo(click.style("-" * 55, fg="green", bold=True))
+        click.echo(click.style(f"Generating {character_amount} characters resulted in a free-ish run!", fg="green", bold=True))
 
 
 if __name__ == "__main__":
