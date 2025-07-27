@@ -307,10 +307,14 @@ async def main() -> None:
         If it is not, adds the character's full name to the used_names list and continues.
 
         Args:
-            dict_data (dict): The character data dictionary to check for duplicates.
+            character_data (dict): The character data dictionary to check for duplicates.
 
         Leverages:
-            used_names (list): A list of used character names.
+            used_first_names (list): A list of used first names.
+            used_last_names (list): A list of used last names.
+            duplicate_processing_tokens (int): The number of tokens used in the duplicate check.
+            duplicate_processing_token_cost (float): The cost of the duplicate check in USD.
+            duplicate_loops (int): The number of loops in the duplicate check.
         """
         nonlocal duplicate_processing_tokens, duplicate_processing_token_cost, duplicate_loops
 
