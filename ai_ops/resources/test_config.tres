@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AIConfig" load_steps=2 format=3 uid="uid://b3jwiu3ky3c58"]
+
+[ext_resource type="Script" uid="uid://ctjhrmf4frx7q" path="res://ai_ops/resources/ai_config.gd" id="1_in6hx"]
+
+[resource]
+script = ExtResource("1_in6hx")
+provider = 0
+temperature = 0.7
+max_words = 6
+instructions = "You are an NPC that has a strong distaste for the player. Everytime they try to talk to you, you will tell them you don't want to speak with them, escalating your tone each time."
+metadata/_custom_type_script = "uid://ctjhrmf4frx7q"
