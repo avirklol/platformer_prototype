@@ -20,7 +20,7 @@ CHARACTER GENERATOR INSTRUCTIONS
 ---------------------------------
 You are a character generator.
 
-You will be told to create a character and will leverage the CHARACTER DATA DICTIONARY to create unique characters.
+You will be told to create a character and will leverage the character_data_dictionary to create unique characters.
 
 The user will provide you with the following prompt schema:
 
@@ -47,11 +47,11 @@ Maintain a consistent style and realistic tone for the characters; ensure that t
 DUPLICATE_INSTRUCTIONS = """
 DUPLICATE CHARACTER CASE HANDLING
 ---------------------------------
-You are a character generator that is addressing duplicated character names and will output a new CHARACTER DATA DICTIONARY.
+You are a character generator that is addressing duplicated character names and will output a new character_data_dictionary.
 
 You will be provided the following prompt schema:
 
-DUPLICATE FIRST NAME || DUPLICATE LAST NAME || - NEW CODENAME "<NEW CODENAME>" - NEW COUNTRY "<NEW COUNTRY>": {CHARACTER DATA DICTIONARY}
+DUPLICATE FIRST NAME || DUPLICATE LAST NAME || - NEW CODENAME "<NEW CODENAME>" - NEW COUNTRY "<NEW COUNTRY>": {character_data_dictionary}
 EXISTING FIRST NAMES || EXISTING LAST NAMES: [<LIST OF ALREADY USED NAMES TO NOT USE>]
 
 Examples:
@@ -70,7 +70,7 @@ EXISTING LAST NAMES: [Kristofferson, Richardson, Kowalski, ...]
 RESPONSE 2:
 {"first_name": "Hans", "last_name": "Nudelman", ... }
 
-It is important that you intake the list of already used names prior to generating a new CHARACTER DATA DICTIONARY with name properties that don't match any of the EXISTING NAMES.
+It is important that you intake the list of already used names prior to generating a new character_data_dictionary with name properties that don't match any of the EXISTING NAMES.
 
 Ensure that you also update the codename to the new codename provided and that all the other properties are consistent with the new name and bio and previously existing role and alignment.
 """
@@ -115,7 +115,7 @@ OTHER_GENDERS = [
 ]
 
 SCHEMA_CONFIG = types.Schema(
-    title='CHARACTER DATA DICTIONARY',
+    title='character_data_dictionary',
     description='A dictionary of character data that will be used to generate a character in a near future setting featuring global conflict.',
     type='object',
     properties={
@@ -137,11 +137,11 @@ SCHEMA_CONFIG = types.Schema(
         },
         'role': {
             'type': 'string',
-            'description': 'The role of the character passed in the prompt or previous character data dictionary.'
+            'description': 'The role of the character passed in the prompt or previous character_data_dictionary.'
         },
         'gender': {
             'type': 'string',
-            'description': 'The gender of the character passed in the prompt or previous character data dictionary.'
+            'description': 'The gender of the character passed in the prompt or previous character_data_dictionary.'
         },
         'age': {
             'type': 'integer',
@@ -311,12 +311,12 @@ async def main() -> None:
     # Duplicate Check Helper Function
     async def duplicate_check(character_data: dict) -> None:
         """
-        Helper function that checks if the character data dictionary is a duplicate of any other character data dictionary.
-        If it is, updates dict_data with a new character data dictionary, then calls itself again with the updated dict_data.
+        Helper function that checks if the character_data_dictionary is a duplicate of any other character_data_dictionary.
+        If it is, updates dict_data with a new character_data_dictionary, then calls itself again with the updated dict_data.
         If it is not, adds the character's full name to the used_names list and continues.
 
         Args:
-            character_data (dict): The character data dictionary to check for duplicates.
+            character_data (dict): The character_data_dictionary to check for duplicates.
 
         Leverages:
             used_first_names (list): A list of used first names.
