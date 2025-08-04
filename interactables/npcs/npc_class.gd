@@ -14,6 +14,9 @@ class_name NPC
 @export var is_merchant: bool = false
 @export var is_hostile: bool = false
 
+@export_group("AI")
+@export var brain: AIBrain
+
 @export_group("Gameplay Stats")
 @export var height: float
 @export var weight: float

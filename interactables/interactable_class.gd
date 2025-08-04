@@ -28,6 +28,7 @@ func open_interaction() -> void:
 
 func close_interaction() -> void:
 	interaction_menu.visible = false
+	# interaction_menu.size = Vector2(0, 0)
 	interaction_menu.destroy_interaction_menu()
 	interaction_active = false
 	interaction_menu = null

@@ -7,7 +7,7 @@
 
 [node name="InteractionMenu" type="PanelContainer"]
 offset_right = 40.0
-offset_bottom = 40.0
+offset_bottom = 41.0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_xw6kb")
 script = ExtResource("1_xw6kb")
 

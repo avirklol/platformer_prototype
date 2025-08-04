@@ -33,6 +33,10 @@ layout_mode = 2
 [node name="ItemImage" type="TextureRect" parent="CenterContainer/Panel"]
 unique_name_in_owner = true
 layout_mode = 0
+offset_left = -8.0
+offset_top = -8.0
+offset_right = -8.0
+offset_bottom = -8.0
 
 [node name="StackCount" type="Label" parent="."]
 unique_name_in_owner = true
