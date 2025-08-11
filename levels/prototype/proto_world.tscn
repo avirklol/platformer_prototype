@@ -1050,13 +1050,3 @@ loot_amount = 5
 
 [node name="TestNPC" parent="." instance=ExtResource("9_t7ggy")]
 position = Vector2(-1457, 294)
-first_name = ""
-last_name = ""
-bio = ""
-alignment = ""
-personality = ""
-interests = ""
-goals = ""
-gender = ""
-age = 0
-interaction_data = null
