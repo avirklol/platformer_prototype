@@ -66,6 +66,7 @@ class_name State
 @onready var wall_slide_collision: CollisionShape2D = %WallSlideCollision
 @onready var crouch_collision: CollisionShape2D = %CrouchCollision
 @onready var ledge_grab: CollisionShape2D = %LedgeGrab
+
 # ShapeCasts
 @onready var top_check: ShapeCast2D = %TopCheck
 @onready var ladder_top_check: ShapeCast2D = %LadderTopCheck
@@ -79,8 +80,10 @@ class_name State
 @onready var wall_slide_check: ShapeCast2D = %WallSlideCheck
 @onready var wall_body_check: ShapeCast2D = %WallBodyCheck
 @onready var crouch_wall_body_check: ShapeCast2D = %CrouchWallBodyCheck
+
 # Timers
 @onready var ladder_release: Timer = %LadderRelease
+
 # Camera
 @onready var camera: Camera2D = %Camera2D
 
