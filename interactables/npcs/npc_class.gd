@@ -4,13 +4,16 @@ class_name NPC
 @export_group("RPG Stats")
 @export var first_name: String
 @export var last_name: String
-@export var bio: String
-@export var alignment: String
-@export var personality: String
-@export var interests: String
-@export var goals: String
-@export var gender: String
 @export var age: int
+@export var gender: String
+@export var country: String
+@export var location: String
+@export var occupation: String
+@export var personality: String
+@export var bio: String
+@export var goals: String
+@export var interests: String
+@export var alignment: String
 @export var is_merchant: bool = false
 @export var is_hostile: bool = false
 
