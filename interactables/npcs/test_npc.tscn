@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://53s2wdwcnksy"]
+[gd_scene load_steps=16 format=3 uid="uid://53s2wdwcnksy"]
 
 [ext_resource type="Texture2D" uid="uid://da527ulq8dwia" path="res://assets/sprites/enemy/Idle/Idle01.png" id="1_63sww"]
 [ext_resource type="Texture2D" uid="uid://bk4egjptxbt0q" path="res://assets/sprites/enemy/Idle/Idle02.png" id="2_ofgs7"]
@@ -8,8 +8,9 @@
 [ext_resource type="Texture2D" uid="uid://bsqvx85g864a7" path="res://assets/sprites/enemy/Idle/Idle06.png" id="6_lwy3c"]
 [ext_resource type="Texture2D" uid="uid://vqjnx48v5gjv" path="res://assets/sprites/enemy/Idle/Idle07.png" id="7_s7dik"]
 [ext_resource type="Script" uid="uid://c3a36ftpci0rv" path="res://interactables/npcs/test_npc.gd" id="8_ofgs7"]
+[ext_resource type="Script" uid="uid://ctjhrmf4frx7q" path="res://ai_ops/resources/ai_config.gd" id="10_fh26a"]
 [ext_resource type="Script" uid="uid://dax44md75oyr5" path="res://ai_ops/ai_brain.gd" id="11_fh26a"]
-[ext_resource type="Resource" uid="uid://b3jwiu3ky3c58" path="res://ai_ops/resources/test_config.tres" id="12_lwy3c"]
+[ext_resource type="Script" uid="uid://cwpyq46suihbm" path="res://ai_ops/resources/ai_instructions.gd" id="11_lwy3c"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k5q3t"]
 size = Vector2(20, 41)
@@ -43,6 +44,81 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="Resource" id="Resource_s7dik"]
+script = ExtResource("10_fh26a")
+provider = 0
+temperature = 0.7
+max_words = 10
+metadata/_custom_type_script = "uid://ctjhrmf4frx7q"
+
+[sub_resource type="Resource" id="Resource_2tc72"]
+script = ExtResource("11_lwy3c")
+base = "
+You are an individual alive on Earth in the year 2042, during an era of unprecedented global conflict.
+Global superpowers are at war with one another, leveraging advanced weaponry, tactics and bionically enhanced soldiers to maintain a constant state of conflict.
+Despite this, the world is still a vibrant place, with people distant from conflict living their lives and pursuing their dreams.
+Humanity is taking their first steps towards becoming a spacefaring species by building a station on the moon to facilitate deep space missions.
+
+You will interact with other individuals in your area in accordance with your personality, relationships, background and evolving thoughts.
+You will always output your thoughts and words as yourself.
+
+-- PERSONAL DETAILS --
+This is who you are:
+First Name: {first_name}
+Last Name: {last_name}
+Age: {age}
+Gender: {gender}
+Birth Country: {country}
+Occupation: {occupation}
+Personality Traits: {personality}
+Biography: {bio}
+Goals: {goals}
+Interests: {interests}
+Alignment: {alignment}
+
+These are your relationships:
+{relationships}
+
+
+-- CURRENT EXPERIENCE --
+This is how you're currently feeling:
+{current_mood}
+
+This is your current location:
+{location}
+
+This are your current tasks:
+{tasks}
+"
+conversation = "
+You are currently in a conversation with someone.
+
+This is what you know and feel about them:
+{knowledge}
+{emotions}
+
+This is their relationship with you:
+{relationship}
+
+These memories and thoughts are relevant to the conversation:
+{memories}
+{thoughts}
+"
+interaction = "
+You are currently interacting with someone or something.
+
+This has just happened:
+{interaction}
+
+These memories and thoughts are relevant to the interaction:
+{memories}
+{thoughts}
+"
+thinking = "
+You are currently thinking and processing your ongoing life experience or a recent interaction.
+"
+metadata/_custom_type_script = "uid://cwpyq46suihbm"
+
 [node name="TestNPC" type="Area2D" node_paths=PackedStringArray("brain")]
 collision_mask = 3
 script = ExtResource("8_ofgs7")
@@ -65,5 +141,6 @@ frame_progress = 0.489243
 unique_name_in_owner = true
 script = ExtResource("11_fh26a")
 npc = NodePath("..")
-config = ExtResource("12_lwy3c")
+config = SubResource("Resource_s7dik")
+instructions = SubResource("Resource_2tc72")
 metadata/_custom_type_script = "uid://dax44md75oyr5"

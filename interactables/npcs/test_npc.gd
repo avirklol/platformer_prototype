@@ -38,3 +38,4 @@ func speak(words: String) -> void:
 
 func think(thoughts: String) -> void:
 	print(thoughts)
+	print(brain.mood)
