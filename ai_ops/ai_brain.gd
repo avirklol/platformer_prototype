@@ -51,11 +51,12 @@ func process_conversation(player_dialogue: String) -> void:
 	if previous_response_id:
 		config.body["previous_response_id"] = previous_response_id
 
-	config.body["input"] = player_message
+	config.body["input"].clear()
+	config.body["input"].append(player_message)
 	config.body["instructions"] = base_instructions
 	config.body["text"]["format"]["schema"] = config.output_type["conversation"]
 
-	var request_body = JSON.stringify(config.body)
+	var request_body = JSON.stringify(config.body, "\t", true, true)
 
 	var process_response: Callable = func(response: Dictionary):
 		if response.has("id"):
@@ -76,25 +77,26 @@ func process_conversation(player_dialogue: String) -> void:
 	send_request(request_body, process_response)
 
 
-# INSTRUCTION HELPERS ---
+# INSTRUCTION FORMATTING HELPERS
 func build_base_instructions() -> String:
 	return instructions.base.format({
 		"first_name": npc.first_name,
-        "last_name": npc.last_name,
+		"last_name": npc.last_name,
 		"age": npc.age,
-        "gender": npc.gender,
+		"gender": npc.gender,
 		"country": npc.country,
 		"location": npc.location,
-        "occupation": npc.occupation,
+		"occupation": npc.occupation,
 		"personality": npc.personality,
-        "bio": npc.bio,
+		"bio": npc.bio,
 		"goals": npc.goals,
-        "interests": npc.interests,
+		"interests": npc.interests,
 		"alignment": npc.alignment,
 		"current_mood": mood,
 		"relationships": str(close_relationships) if !close_relationships.is_empty() else "You have no relationships.",
 		"tasks": str(tasks) if !tasks.is_empty() else "You have no tasks."
 	})
+
 
 func build_conversation_instructions() -> String:
 	return instructions.conversation.format({
@@ -106,7 +108,7 @@ func build_conversation_instructions() -> String:
 	})
 
 
-# REQUEST HELPERS --
+# REQUEST HELPERS
 func send_request(request_body: String, on_request_completed: Callable) -> void:
 	var http: HTTPRequest = HTTPRequest.new()
 	add_child(http)
