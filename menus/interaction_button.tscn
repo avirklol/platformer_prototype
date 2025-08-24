@@ -1,11 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://cnumlt24rvk"]
+[gd_scene format=3 uid="uid://cnumlt24rvk"]
 
-[ext_resource type="SystemFont" uid="uid://lfwcbhk2fuxr" path="res://assets/fonts/stack_count.tres" id="1_6fk8s"]
-
-[node name="InteractionButton" type="Button"]
+[node name="InteractionButton" type="TextureButton"]
 custom_minimum_size = Vector2(42, 25)
 offset_right = 42.0
 offset_bottom = 25.0
-theme_override_fonts/font = ExtResource("1_6fk8s")
-theme_override_font_sizes/font_size = 7
-text = "USE"
