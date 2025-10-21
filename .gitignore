@@ -187,3 +187,5 @@ assets/
 icon.svg
 platformer_prototype.code-workspace
 .DS_Store
+
+**/*.uid

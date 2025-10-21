@@ -9,6 +9,9 @@ enum Provider {
 
 
 @export var provider: Provider = Provider.OPENAI
+@export var openai_key: String = ""
+@export var google_key: String = ""
+@export var venice_key: String = ""
 @export var temperature: float = 0.7
 @export var max_words: int = 10
 
@@ -84,20 +87,19 @@ var request_data: Dictionary = {
 		Provider.VENICE: "https://api.venice.com/v1/chat/completions"
 	},
 	"keys": {
-		Provider.OPENAI: "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",
-		Provider.GOOGLE: "AIzaSyDsG0bjDTs5v4YWeRJyX84TlBC-ZSj_2hI",
-		Provider.VENICE: "dcM129cIvkV8NMVXkGtXaaj2vhTUksQuOJahevDd3_"
+		Provider.OPENAI: openai_key,
+		Provider.GOOGLE: google_key,
+		Provider.VENICE: venice_key,
 	},
 	"schemas": {
 		Provider.OPENAI: {
 			"headers": [
-				"Authorization: Bearer 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",
+				"Authorization: Bearer {openai_key}".format({"openai_key": openai_key}),
 				"Content-Type: application/json"
 			],
 			"body": {
 				"model": "gpt-4.1-nano",
 				"instructions": null,
-				"input": [],
 				"temperature": temperature,
 				"previous_response_id": null,
 				"text": {
