@@ -28,6 +28,7 @@ Here are a series of interactions with a basic NPC that has been configured to d
 ![first npc interaction](https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExMHVua3J6bHl0MThiOW5kbmMwNjlhaWFmNGRmY3F2M3g4NjFqa2UzcCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/1wlozmYXfTin10WHpK/giphy.gif)
 ![second npc interaction](https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExZXA5NGxhZjNnZXJtdjJxcHN1NDUzc3FlazRwMjdlYmR0MmVqNmNwZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/snzrVF1mYwJmvt8YG4/giphy.gif)
 ![third npc interaction](https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExdmxkcDNid3RicTN4M25wOXowbjJ3YnJtYm1jYTB1Y2oxN2xoODJpZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/4taUjsDwgbzOM9hPkC/giphy.gif)
+![fourth npc interaction](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ2dpZWwyanEwYWNqeGtmNzUwdTFtdWZld3Vsd2VrOTUyNnIxbml3MyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/8c7L34sNqj4gol2fOh/giphy.gif)
 
 #### Conversation Design and Architecture
 
