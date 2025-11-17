@@ -12,9 +12,20 @@ The game's audio landscape is managed by a dynamic sound database that recursive
 
 The player character's movement is governed by a finite state machine (FSM). This architecture provides a robust and extensible framework for managing the player's various states, such as walking, running, jumping, and interacting with objects. The state machine ensures smooth transitions between different animations and actions, resulting in a fluid and intuitive control scheme.
 
+Some movement in action:
+![ledge climb, crawl, climb ladder, jump to platform](https://imgur.com/gallery/platformer-prototype-FuQ20eT#PmDmgfT)
+![ledge climb, drop to ledge hang](https://imgur.com/gallery/platformer-prototype-FuQ20eT#143NG7v)
+![wall jump to platform](https://imgur.com/gallery/platformer-prototype-FuQ20eT#BTzTMC1)
+![jump to wallslide, wall jump](https://imgur.com/gallery/platformer-prototype-FuQ20eT#FwWYuQj)
+
 ### LLM-Powered NPCs for Dynamic Interactions
 
 The core of this prototype is its use of Large Language Models to create NPCs that are more than just static entities. These NPCs leverage LLMs to generate dialogue and reactions in real-time, resulting in conversations that are dynamic, context-aware, and unique to each player interaction.
+
+Here are a series of interactions with a basic NPC that has been configured to detest the player:
+![first npc interaction](https://imgur.com/gallery/platformer-prototype-FuQ20eT#Yq9H4bl)
+![second npc interaction](https://imgur.com/gallery/platformer-prototype-FuQ20eT#LUIC36T)
+![third npc interaction](https://imgur.com/gallery/platformer-prototype-FuQ20eT#B0vmWX4)
 
 #### Conversation Design and Architecture
 
