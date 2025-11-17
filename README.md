@@ -13,19 +13,21 @@ The game's audio landscape is managed by a dynamic sound database that recursive
 The player character's movement is governed by a finite state machine (FSM). This architecture provides a robust and extensible framework for managing the player's various states, such as walking, running, jumping, and interacting with objects. The state machine ensures smooth transitions between different animations and actions, resulting in a fluid and intuitive control scheme.
 
 Some movement in action:
-![ledge climb, crawl, climb ladder, jump to platform](https://imgur.com/gallery/platformer-prototype-FuQ20eT#PmDmgfT)
-![ledge climb, drop to ledge hang](https://imgur.com/gallery/platformer-prototype-FuQ20eT#143NG7v)
-![wall jump to platform](https://imgur.com/gallery/platformer-prototype-FuQ20eT#BTzTMC1)
-![jump to wallslide, wall jump](https://imgur.com/gallery/platformer-prototype-FuQ20eT#FwWYuQj)
+
+![ledge climb, crawl, climb ladder, jump to platform](https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExdmNoZnNlMWkydHk4dXgxNHJpNTMzYm9qOHdxZHE0MTduc2Zzcno1eSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/HfUsBu0tVNOdKPm17x/giphy.gif)
+![ledge climb, drop to ledge hang](https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExemNpbDFmMTNueGM0eWthaDdhdTV2anMwaXF2OHdreWw0ZzZ3MmxsZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/YqJGoMvii94LTw8I6U/giphy.gif)
+![wall jump to platform](https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDFhMTczdTlrbzlodG0xdHZiZ3Y1M2xwMXE0eWI1dWgwNm03dzNwZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/yCSyTGtxhVZSmCuHIJ/giphy.gif)
+![jump to wallslide, wall jump](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ2dpZWwyanEwYWNqeGtmNzUwdTFtdWZld3Vsd2VrOTUyNnIxbml3MyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/8c7L34sNqj4gol2fOh/giphy.gif)
 
 ### LLM-Powered NPCs for Dynamic Interactions
 
 The core of this prototype is its use of Large Language Models to create NPCs that are more than just static entities. These NPCs leverage LLMs to generate dialogue and reactions in real-time, resulting in conversations that are dynamic, context-aware, and unique to each player interaction.
 
 Here are a series of interactions with a basic NPC that has been configured to detest the player:
-![first npc interaction](https://imgur.com/gallery/platformer-prototype-FuQ20eT#Yq9H4bl)
-![second npc interaction](https://imgur.com/gallery/platformer-prototype-FuQ20eT#LUIC36T)
-![third npc interaction](https://imgur.com/gallery/platformer-prototype-FuQ20eT#B0vmWX4)
+
+![first npc interaction](https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExMHVua3J6bHl0MThiOW5kbmMwNjlhaWFmNGRmY3F2M3g4NjFqa2UzcCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/1wlozmYXfTin10WHpK/giphy.gif)
+![second npc interaction](https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExZXA5NGxhZjNnZXJtdjJxcHN1NDUzc3FlazRwMjdlYmR0MmVqNmNwZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/snzrVF1mYwJmvt8YG4/giphy.gif)
+![third npc interaction](https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExdmxkcDNid3RicTN4M25wOXowbjJ3YnJtYm1jYTB1Y2oxN2xoODJpZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/4taUjsDwgbzOM9hPkC/giphy.gif)
 
 #### Conversation Design and Architecture
 
@@ -37,4 +39,4 @@ The conversation system is designed to be highly modular and scalable, with a cl
 *   **Multi-Turn Dialogue Systems:** The use of LLMs and orchestration tools allows for the prototyping and testing of multi-turn dialogue systems, with the ability to refine them through data and user feedback.
 *   **Agentic Architectures:** The system is designed to be extended with more advanced agentic architectures, with the `AIBrain` class capable of managing long-term memory, relationships, and goals.
 
-This project serves as a demonstration of how cutting-edge AI techniques can be integrated into game development to create more engaging and believable virtual worlds.
+This project serves as a demonstration of how AI techniques can be integrated into game development to create more engaging and believable virtual worlds.
